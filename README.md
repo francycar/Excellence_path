@@ -9,6 +9,7 @@ The folders are divided as follows:
 -d2_model: contains the domain and problem related to planning domain 2.\
 -d1_model: contains the domain and problem related to planning domain 1.\
 -d2_temporal_goals: contains the domain and problem related to planning domain 2 with the temporal goals obtained with [FOND4LTLfPLTLf](https://github.com/whitemech/FOND4LTLf).
+
 -d1_temporal_goals: contains the domain and problem related to planning domain 1 with the temporal goals obtained with FOND4.
 -Multi_tier_temp_goals: contains the final multi-tier version of domain and problem with temporal goals.
 
