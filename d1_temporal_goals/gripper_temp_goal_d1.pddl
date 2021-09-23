@@ -1,0 +1,30 @@
+(define (domain gripper)
+	(:requirements :typing :strips :non-deterministic)
+	(:types location gripper object)
+	(:predicates (atrob ?loc - location) (spare-in ?loc - location) (adj ?from - location ?to - location) (room ?r - location) (ball ?o - object) (gripper ?gr - gripper) (at ?o - object ?r - location) (free ?gr - gripper) (carry ?o - object ?gr - gripper) (scratch) (turnDomain) (q1 ?loc62 - location) (q2 ?loc62 - location))
+	(:action move
+		:parameters (?from - location ?to - location)
+		:precondition (and (atrob ?from) (adj ?from ?to) (room ?from) (turnDomain))
+		:effect (and (not (atrob ?from)) (atrob ?to) (scratch) (not (turnDomain)))
+	)
+	(:action pick
+		:parameters (?b - object ?r - location ?g - gripper)
+		:precondition (and (atrob ?r) (ball ?b) (gripper ?g) (at ?b ?r) (free ?g) (turnDomain))
+		:effect (and (at ?b ?r) (free ?g) (not (carry ?b ?g)) (not (turnDomain)))
+	)
+	(:action drop
+		:parameters (?b - object ?r - location ?g - gripper)
+		:precondition (and (ball ?b) (room ?r) (gripper ?g) (atrob ?r) (carry ?b ?g) (turnDomain))
+		:effect (and (at ?b ?r) (not (free ?g)) (carry ?b ?g) (not (turnDomain)))
+	)
+	(:action trans-0
+		:parameters (?loc62 - location)
+		:precondition (and (q1 ?loc62) (not (atrob ?loc62)) (not (turnDomain)))
+		:effect (and (q1 ?loc62) (not (q2 ?loc62)) (turnDomain))
+	)
+	(:action trans-1
+		:parameters (?loc62 - location)
+		:precondition (and (or (and (q1 ?loc62) (atrob ?loc62)) (q2 ?loc62)) (not (turnDomain)))
+		:effect (and (q2 ?loc62) (not (q1 ?loc62)) (turnDomain))
+	)
+)
