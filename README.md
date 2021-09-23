@@ -29,5 +29,7 @@ Tools used for the realization:
 
 -A new implemented version of pypddl-translator, see folder **newpypddl**.
 
+python3 main-temporal.py -d <domains_csv_file> -p <problems_csv_file> -outd <intermediate_labelled_domain> -outp <intermediate_labelled_problem> -outmultid <multi-tier_domain> -outmultip <multi-tier_problem> --basic
+
 
 
