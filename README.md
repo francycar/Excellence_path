@@ -18,6 +18,8 @@ The folders are divided as follows:
 
 -Multi_tier_temp_goals: contains the final multi-tier version of domain and problem with temporal goals.
 
+-newpypddl: contains the new version of pypddl-translator, in order to take as input multiple separated domains and multiple separated problems.
+
 
 Tools used for the realization:
 
