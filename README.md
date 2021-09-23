@@ -18,3 +18,14 @@ The folders are divided as follows:
 
 -Multi_tier_temp_goals: contains the final multi-tier version of domain and problem with temporal goals.
 
+
+Tools used for the realization:
+
+-[pypddl-translator](https://github.com/ssardina-planning/pypddl-translator).
+
+-[FOND4LTLfPLTLf](https://github.com/whitemech/FOND4LTLf).
+
+-A new implemented version of pypddl-translator, see folder **newpypddl**.
+
+
+
