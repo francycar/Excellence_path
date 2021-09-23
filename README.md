@@ -4,13 +4,13 @@ I have built a new multi-tier domain (**gripper**) according to the theoretical 
 
 The folders are divided as follows:
 
--labelled_version: contains labelled domain and problem.\
+-labelled_version: contains labelled domain and problem.
 
--multi-tier_version: contains multi-tier domain and multi-tier problem.\
+-multi-tier_version: contains multi-tier domain and multi-tier problem.
 
--d2_model: contains the domain and problem related to planning domain 2.\
+-d2_model: contains the domain and problem related to planning domain 2.
 
--d1_model: contains the domain and problem related to planning domain 1.\
+-d1_model: contains the domain and problem related to planning domain 1.
 
 -d2_temporal_goals: contains the domain and problem related to planning domain 2 with the temporal goals obtained with [FOND4LTLfPLTLf](https://github.com/whitemech/FOND4LTLf).
 
