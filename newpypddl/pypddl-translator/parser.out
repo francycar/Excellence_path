@@ -1,0 +1,2795 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> pddl
+Rule 1     pddl -> domain
+Rule 2     pddl -> problem
+Rule 3     pddl -> domain problem
+Rule 4     domain -> LPAREN DEFINE_KEY domain_def require_def types_def constants_def predicates_def action_def_lst RPAREN
+Rule 5     domain -> LPAREN DEFINE_KEY domain_def require_def types_def predicates_def action_def_lst RPAREN
+Rule 6     domain -> LPAREN DEFINE_KEY domain_def require_def constants_def predicates_def action_def_lst RPAREN
+Rule 7     domain -> LPAREN DEFINE_KEY domain_def require_def predicates_def action_def_lst RPAREN
+Rule 8     domain_def -> LPAREN DOMAIN_KEY NAME RPAREN
+Rule 9     require_def -> LPAREN REQUIREMENTS_KEY require_key_lst RPAREN
+Rule 10    require_key_lst -> require_key require_key_lst
+Rule 11    require_key_lst -> require_key
+Rule 12    require_key -> STRIPS_KEY
+Rule 13    require_key -> EQUALITY_KEY
+Rule 14    require_key -> TYPING_KEY
+Rule 15    require_key -> PROBABILISTIC_EFFECTS_KEY
+Rule 16    types_def -> LPAREN TYPES_KEY typed_names_lst RPAREN
+Rule 17    constants_def -> LPAREN CONSTANTS_KEY typed_names_lst RPAREN
+Rule 18    typed_names_lst -> names_lst HYPHEN type typed_names_lst
+Rule 19    typed_names_lst -> names_lst HYPHEN type
+Rule 20    typed_names_lst -> names_lst
+Rule 21    predicates_def -> LPAREN PREDICATES_KEY predicate_def_lst RPAREN
+Rule 22    predicate_def_lst -> predicate_def predicate_def_lst
+Rule 23    predicate_def_lst -> predicate_def
+Rule 24    predicate_def -> LPAREN NAME typed_variables_lst RPAREN
+Rule 25    predicate_def -> LPAREN NAME variables_lst RPAREN
+Rule 26    predicate_def -> LPAREN NAME RPAREN
+Rule 27    action_def_lst -> action_def action_def_lst
+Rule 28    action_def_lst -> action_def
+Rule 29    action_def -> LPAREN ACTION_KEY NAME parameters_def action_def_body RPAREN
+Rule 30    parameters_def -> PARAMETERS_KEY LPAREN typed_variables_lst RPAREN
+Rule 31    parameters_def -> PARAMETERS_KEY LPAREN variables_lst RPAREN
+Rule 32    parameters_def -> PARAMETERS_KEY LPAREN RPAREN
+Rule 33    action_def_body -> precond_def effects_def
+Rule 34    precond_def -> PRECONDITION_KEY LPAREN AND_KEY literals_lst RPAREN
+Rule 35    precond_def -> PRECONDITION_KEY literal
+Rule 36    effects_def -> EFFECT_KEY effect_body
+Rule 37    effect_body -> LPAREN NAME unlabeled_effect RPAREN
+Rule 38    effect_body -> effect_body LPAREN NAME unlabeled_effect RPAREN
+Rule 39    effect_body -> unlabeled_effect
+Rule 40    unlabeled_effect -> LPAREN ONEOF_KEY effect_body RPAREN
+Rule 41    unlabeled_effect -> deterministic_effect unlabeled_effect
+Rule 42    unlabeled_effect -> deterministic_effect
+Rule 43    deterministic_effect -> LPAREN AND_KEY effects_lst RPAREN
+Rule 44    deterministic_effect -> effects_lst
+Rule 45    when_effects -> when_if when_then
+Rule 46    when_if -> simple_effect
+Rule 47    when_if -> LPAREN AND_KEY simple_effects_lst RPAREN
+Rule 48    when_then -> simple_effect
+Rule 49    when_then -> LPAREN AND_KEY simple_effects_lst RPAREN
+Rule 50    effects_lst -> effect effects_lst
+Rule 51    effects_lst -> effect
+Rule 52    simple_effects_lst -> simple_effect simple_effects_lst
+Rule 53    simple_effects_lst -> simple_effect
+Rule 54    effect -> literal
+Rule 55    effect -> LPAREN PROBABILISTIC_KEY PROBABILITY literal RPAREN
+Rule 56    effect -> LPAREN WHEN_KEY when_effects RPAREN
+Rule 57    simple_effect -> literal
+Rule 58    literals_lst -> literal literals_lst
+Rule 59    literals_lst -> literal
+Rule 60    literals_lst -> or_literal literals_lst
+Rule 61    literals_lst -> or_literal
+Rule 62    literals_lst -> and_literal literals_lst
+Rule 63    literals_lst -> and_literal
+Rule 64    and_literal -> LPAREN AND_KEY literals_lst RPAREN
+Rule 65    and_literal -> literal
+Rule 66    or_literal -> LPAREN OR_KEY literals_lst RPAREN
+Rule 67    or_literal -> literal
+Rule 68    literal -> LPAREN NOT_KEY predicate RPAREN
+Rule 69    literal -> predicate
+Rule 70    ground_predicates_lst -> ground_predicate ground_predicates_lst
+Rule 71    ground_predicates_lst -> ground_predicate
+Rule 72    predicate -> LPAREN NAME variables_lst RPAREN
+Rule 73    predicate -> LPAREN EQUALS VARIABLE VARIABLE RPAREN
+Rule 74    predicate -> LPAREN NAME RPAREN
+Rule 75    predicate -> LPAREN NAME constants_lst RPAREN
+Rule 76    ground_predicate -> LPAREN NAME constants_lst RPAREN
+Rule 77    ground_predicate -> LPAREN NAME RPAREN
+Rule 78    typed_constants_lst -> constants_lst HYPHEN type typed_constants_lst
+Rule 79    typed_constants_lst -> constants_lst HYPHEN type
+Rule 80    typed_variables_lst -> variables_lst HYPHEN type typed_variables_lst
+Rule 81    typed_variables_lst -> variables_lst HYPHEN type
+Rule 82    constants_lst -> constant constants_lst
+Rule 83    constants_lst -> constant
+Rule 84    variables_lst -> variable variables_lst
+Rule 85    variables_lst -> variable
+Rule 86    names_lst -> NAME names_lst
+Rule 87    names_lst -> NAME
+Rule 88    type -> NAME
+Rule 89    constant -> NAME
+Rule 90    variable -> VARIABLE
+Rule 91    problem -> plan_problem
+Rule 92    plan_problem -> LPAREN DEFINE_KEY plan_problem_def domain_def objects_def init_def goal_def RPAREN
+Rule 93    plan_problem -> LPAREN DEFINE_KEY plan_problem_def domain_def init_def goal_def RPAREN
+Rule 94    plan_problem_def -> LPAREN PROBLEM_KEY NAME RPAREN
+Rule 95    objects_def -> LPAREN OBJECTS_KEY typed_constants_lst RPAREN
+Rule 96    objects_def -> LPAREN OBJECTS_KEY constants_lst RPAREN
+Rule 97    init_def -> LPAREN INIT_KEY LPAREN AND_KEY ground_predicates_lst RPAREN RPAREN
+Rule 98    init_def -> LPAREN INIT_KEY ground_predicates_lst RPAREN
+Rule 99    goal_def -> LPAREN GOAL_KEY LPAREN AND_KEY literals_lst RPAREN RPAREN
+Rule 100   goal_def -> LPAREN GOAL_KEY literal RPAREN
+Rule 101   goal_def -> LPAREN GOAL_KEY LPAREN ONEOF_KEY effect_body RPAREN RPAREN
+
+Terminals, with rules where they appear
+
+ACTION_KEY           : 29
+AND_KEY              : 34 43 47 49 64 97 99
+CONSTANTS_KEY        : 17
+DEFINE_KEY           : 4 5 6 7 92 93
+DOMAIN_KEY           : 8
+EFFECT_KEY           : 36
+EQUALITY_KEY         : 13
+EQUALS               : 73
+GOAL_KEY             : 99 100 101
+HYPHEN               : 18 19 78 79 80 81
+INIT_KEY             : 97 98
+LPAREN               : 4 5 6 7 8 9 16 17 21 24 25 26 29 30 31 32 34 37 38 40 43 47 49 55 56 64 66 68 72 73 74 75 76 77 92 93 94 95 96 97 97 98 99 99 100 101 101
+NAME                 : 8 24 25 26 29 37 38 72 74 75 76 77 86 87 88 89 94
+NOT_KEY              : 68
+OBJECTS_KEY          : 95 96
+ONEOF_KEY            : 40 101
+OR_KEY               : 66
+PARAMETERS_KEY       : 30 31 32
+PRECONDITION_KEY     : 34 35
+PREDICATES_KEY       : 21
+PROBABILISTIC_EFFECTS_KEY : 15
+PROBABILISTIC_KEY    : 55
+PROBABILITY          : 55
+PROBLEM_KEY          : 94
+REQUIREMENTS_KEY     : 9
+RPAREN               : 4 5 6 7 8 9 16 17 21 24 25 26 29 30 31 32 34 37 38 40 43 47 49 55 56 64 66 68 72 73 74 75 76 77 92 93 94 95 96 97 97 98 99 99 100 101 101
+STRIPS_KEY           : 12
+TYPES_KEY            : 16
+TYPING_KEY           : 14
+VARIABLE             : 73 73 90
+WHEN_KEY             : 56
+error                : 
+
+Nonterminals, with rules where they appear
+
+action_def           : 27 28
+action_def_body      : 29
+action_def_lst       : 4 5 6 7 27
+and_literal          : 62 63
+constant             : 82 83
+constants_def        : 4 6
+constants_lst        : 75 76 78 79 82 96
+deterministic_effect : 41 42
+domain               : 1 3
+domain_def           : 4 5 6 7 92 93
+effect               : 50 51
+effect_body          : 36 38 40 101
+effects_def          : 33
+effects_lst          : 43 44 50
+goal_def             : 92 93
+ground_predicate     : 70 71
+ground_predicates_lst : 70 97 98
+init_def             : 92 93
+literal              : 35 54 55 57 58 59 65 67 100
+literals_lst         : 34 58 60 62 64 66 99
+names_lst            : 18 19 20 86
+objects_def          : 92
+or_literal           : 60 61
+parameters_def       : 29
+pddl                 : 0
+plan_problem         : 91
+plan_problem_def     : 92 93
+precond_def          : 33
+predicate            : 68 69
+predicate_def        : 22 23
+predicate_def_lst    : 21 22
+predicates_def       : 4 5 6 7
+problem              : 2 3
+require_def          : 4 5 6 7
+require_key          : 10 11
+require_key_lst      : 9 10
+simple_effect        : 46 48 52 53
+simple_effects_lst   : 47 49 52
+type                 : 18 19 78 79 80 81
+typed_constants_lst  : 78 95
+typed_names_lst      : 16 17 18
+typed_variables_lst  : 24 30 80
+types_def            : 4 5
+unlabeled_effect     : 37 38 39 41
+variable             : 84 85
+variables_lst        : 25 31 72 80 81 84
+when_effects         : 56
+when_if              : 45
+when_then            : 45
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . pddl
+    (1) pddl -> . domain
+    (2) pddl -> . problem
+    (3) pddl -> . domain problem
+    (4) domain -> . LPAREN DEFINE_KEY domain_def require_def types_def constants_def predicates_def action_def_lst RPAREN
+    (5) domain -> . LPAREN DEFINE_KEY domain_def require_def types_def predicates_def action_def_lst RPAREN
+    (6) domain -> . LPAREN DEFINE_KEY domain_def require_def constants_def predicates_def action_def_lst RPAREN
+    (7) domain -> . LPAREN DEFINE_KEY domain_def require_def predicates_def action_def_lst RPAREN
+    (91) problem -> . plan_problem
+    (92) plan_problem -> . LPAREN DEFINE_KEY plan_problem_def domain_def objects_def init_def goal_def RPAREN
+    (93) plan_problem -> . LPAREN DEFINE_KEY plan_problem_def domain_def init_def goal_def RPAREN
+
+    LPAREN          shift and go to state 4
+
+    pddl                           shift and go to state 1
+    domain                         shift and go to state 2
+    problem                        shift and go to state 3
+    plan_problem                   shift and go to state 5
+
+state 1
+
+    (0) S' -> pddl .
+
+
+
+state 2
+
+    (1) pddl -> domain .
+    (3) pddl -> domain . problem
+    (91) problem -> . plan_problem
+    (92) plan_problem -> . LPAREN DEFINE_KEY plan_problem_def domain_def objects_def init_def goal_def RPAREN
+    (93) plan_problem -> . LPAREN DEFINE_KEY plan_problem_def domain_def init_def goal_def RPAREN
+
+    $end            reduce using rule 1 (pddl -> domain .)
+    LPAREN          shift and go to state 7
+
+    problem                        shift and go to state 6
+    plan_problem                   shift and go to state 5
+
+state 3
+
+    (2) pddl -> problem .
+
+    $end            reduce using rule 2 (pddl -> problem .)
+
+
+state 4
+
+    (4) domain -> LPAREN . DEFINE_KEY domain_def require_def types_def constants_def predicates_def action_def_lst RPAREN
+    (5) domain -> LPAREN . DEFINE_KEY domain_def require_def types_def predicates_def action_def_lst RPAREN
+    (6) domain -> LPAREN . DEFINE_KEY domain_def require_def constants_def predicates_def action_def_lst RPAREN
+    (7) domain -> LPAREN . DEFINE_KEY domain_def require_def predicates_def action_def_lst RPAREN
+    (92) plan_problem -> LPAREN . DEFINE_KEY plan_problem_def domain_def objects_def init_def goal_def RPAREN
+    (93) plan_problem -> LPAREN . DEFINE_KEY plan_problem_def domain_def init_def goal_def RPAREN
+
+    DEFINE_KEY      shift and go to state 8
+
+
+state 5
+
+    (91) problem -> plan_problem .
+
+    $end            reduce using rule 91 (problem -> plan_problem .)
+
+
+state 6
+
+    (3) pddl -> domain problem .
+
+    $end            reduce using rule 3 (pddl -> domain problem .)
+
+
+state 7
+
+    (92) plan_problem -> LPAREN . DEFINE_KEY plan_problem_def domain_def objects_def init_def goal_def RPAREN
+    (93) plan_problem -> LPAREN . DEFINE_KEY plan_problem_def domain_def init_def goal_def RPAREN
+
+    DEFINE_KEY      shift and go to state 9
+
+
+state 8
+
+    (4) domain -> LPAREN DEFINE_KEY . domain_def require_def types_def constants_def predicates_def action_def_lst RPAREN
+    (5) domain -> LPAREN DEFINE_KEY . domain_def require_def types_def predicates_def action_def_lst RPAREN
+    (6) domain -> LPAREN DEFINE_KEY . domain_def require_def constants_def predicates_def action_def_lst RPAREN
+    (7) domain -> LPAREN DEFINE_KEY . domain_def require_def predicates_def action_def_lst RPAREN
+    (92) plan_problem -> LPAREN DEFINE_KEY . plan_problem_def domain_def objects_def init_def goal_def RPAREN
+    (93) plan_problem -> LPAREN DEFINE_KEY . plan_problem_def domain_def init_def goal_def RPAREN
+    (8) domain_def -> . LPAREN DOMAIN_KEY NAME RPAREN
+    (94) plan_problem_def -> . LPAREN PROBLEM_KEY NAME RPAREN
+
+    LPAREN          shift and go to state 10
+
+    domain_def                     shift and go to state 11
+    plan_problem_def               shift and go to state 12
+
+state 9
+
+    (92) plan_problem -> LPAREN DEFINE_KEY . plan_problem_def domain_def objects_def init_def goal_def RPAREN
+    (93) plan_problem -> LPAREN DEFINE_KEY . plan_problem_def domain_def init_def goal_def RPAREN
+    (94) plan_problem_def -> . LPAREN PROBLEM_KEY NAME RPAREN
+
+    LPAREN          shift and go to state 13
+
+    plan_problem_def               shift and go to state 12
+
+state 10
+
+    (8) domain_def -> LPAREN . DOMAIN_KEY NAME RPAREN
+    (94) plan_problem_def -> LPAREN . PROBLEM_KEY NAME RPAREN
+
+    DOMAIN_KEY      shift and go to state 14
+    PROBLEM_KEY     shift and go to state 15
+
+
+state 11
+
+    (4) domain -> LPAREN DEFINE_KEY domain_def . require_def types_def constants_def predicates_def action_def_lst RPAREN
+    (5) domain -> LPAREN DEFINE_KEY domain_def . require_def types_def predicates_def action_def_lst RPAREN
+    (6) domain -> LPAREN DEFINE_KEY domain_def . require_def constants_def predicates_def action_def_lst RPAREN
+    (7) domain -> LPAREN DEFINE_KEY domain_def . require_def predicates_def action_def_lst RPAREN
+    (9) require_def -> . LPAREN REQUIREMENTS_KEY require_key_lst RPAREN
+
+    LPAREN          shift and go to state 16
+
+    require_def                    shift and go to state 17
+
+state 12
+
+    (92) plan_problem -> LPAREN DEFINE_KEY plan_problem_def . domain_def objects_def init_def goal_def RPAREN
+    (93) plan_problem -> LPAREN DEFINE_KEY plan_problem_def . domain_def init_def goal_def RPAREN
+    (8) domain_def -> . LPAREN DOMAIN_KEY NAME RPAREN
+
+    LPAREN          shift and go to state 18
+
+    domain_def                     shift and go to state 19
+
+state 13
+
+    (94) plan_problem_def -> LPAREN . PROBLEM_KEY NAME RPAREN
+
+    PROBLEM_KEY     shift and go to state 15
+
+
+state 14
+
+    (8) domain_def -> LPAREN DOMAIN_KEY . NAME RPAREN
+
+    NAME            shift and go to state 20
+
+
+state 15
+
+    (94) plan_problem_def -> LPAREN PROBLEM_KEY . NAME RPAREN
+
+    NAME            shift and go to state 21
+
+
+state 16
+
+    (9) require_def -> LPAREN . REQUIREMENTS_KEY require_key_lst RPAREN
+
+    REQUIREMENTS_KEY shift and go to state 22
+
+
+state 17
+
+    (4) domain -> LPAREN DEFINE_KEY domain_def require_def . types_def constants_def predicates_def action_def_lst RPAREN
+    (5) domain -> LPAREN DEFINE_KEY domain_def require_def . types_def predicates_def action_def_lst RPAREN
+    (6) domain -> LPAREN DEFINE_KEY domain_def require_def . constants_def predicates_def action_def_lst RPAREN
+    (7) domain -> LPAREN DEFINE_KEY domain_def require_def . predicates_def action_def_lst RPAREN
+    (16) types_def -> . LPAREN TYPES_KEY typed_names_lst RPAREN
+    (17) constants_def -> . LPAREN CONSTANTS_KEY typed_names_lst RPAREN
+    (21) predicates_def -> . LPAREN PREDICATES_KEY predicate_def_lst RPAREN
+
+    LPAREN          shift and go to state 23
+
+    types_def                      shift and go to state 24
+    constants_def                  shift and go to state 25
+    predicates_def                 shift and go to state 26
+
+state 18
+
+    (8) domain_def -> LPAREN . DOMAIN_KEY NAME RPAREN
+
+    DOMAIN_KEY      shift and go to state 14
+
+
+state 19
+
+    (92) plan_problem -> LPAREN DEFINE_KEY plan_problem_def domain_def . objects_def init_def goal_def RPAREN
+    (93) plan_problem -> LPAREN DEFINE_KEY plan_problem_def domain_def . init_def goal_def RPAREN
+    (95) objects_def -> . LPAREN OBJECTS_KEY typed_constants_lst RPAREN
+    (96) objects_def -> . LPAREN OBJECTS_KEY constants_lst RPAREN
+    (97) init_def -> . LPAREN INIT_KEY LPAREN AND_KEY ground_predicates_lst RPAREN RPAREN
+    (98) init_def -> . LPAREN INIT_KEY ground_predicates_lst RPAREN
+
+    LPAREN          shift and go to state 27
+
+    objects_def                    shift and go to state 28
+    init_def                       shift and go to state 29
+
+state 20
+
+    (8) domain_def -> LPAREN DOMAIN_KEY NAME . RPAREN
+
+    RPAREN          shift and go to state 30
+
+
+state 21
+
+    (94) plan_problem_def -> LPAREN PROBLEM_KEY NAME . RPAREN
+
+    RPAREN          shift and go to state 31
+
+
+state 22
+
+    (9) require_def -> LPAREN REQUIREMENTS_KEY . require_key_lst RPAREN
+    (10) require_key_lst -> . require_key require_key_lst
+    (11) require_key_lst -> . require_key
+    (12) require_key -> . STRIPS_KEY
+    (13) require_key -> . EQUALITY_KEY
+    (14) require_key -> . TYPING_KEY
+    (15) require_key -> . PROBABILISTIC_EFFECTS_KEY
+
+    STRIPS_KEY      shift and go to state 34
+    EQUALITY_KEY    shift and go to state 35
+    TYPING_KEY      shift and go to state 36
+    PROBABILISTIC_EFFECTS_KEY shift and go to state 37
+
+    require_key_lst                shift and go to state 32
+    require_key                    shift and go to state 33
+
+state 23
+
+    (16) types_def -> LPAREN . TYPES_KEY typed_names_lst RPAREN
+    (17) constants_def -> LPAREN . CONSTANTS_KEY typed_names_lst RPAREN
+    (21) predicates_def -> LPAREN . PREDICATES_KEY predicate_def_lst RPAREN
+
+    TYPES_KEY       shift and go to state 38
+    CONSTANTS_KEY   shift and go to state 39
+    PREDICATES_KEY  shift and go to state 40
+
+
+state 24
+
+    (4) domain -> LPAREN DEFINE_KEY domain_def require_def types_def . constants_def predicates_def action_def_lst RPAREN
+    (5) domain -> LPAREN DEFINE_KEY domain_def require_def types_def . predicates_def action_def_lst RPAREN
+    (17) constants_def -> . LPAREN CONSTANTS_KEY typed_names_lst RPAREN
+    (21) predicates_def -> . LPAREN PREDICATES_KEY predicate_def_lst RPAREN
+
+    LPAREN          shift and go to state 41
+
+    constants_def                  shift and go to state 42
+    predicates_def                 shift and go to state 43
+
+state 25
+
+    (6) domain -> LPAREN DEFINE_KEY domain_def require_def constants_def . predicates_def action_def_lst RPAREN
+    (21) predicates_def -> . LPAREN PREDICATES_KEY predicate_def_lst RPAREN
+
+    LPAREN          shift and go to state 44
+
+    predicates_def                 shift and go to state 45
+
+state 26
+
+    (7) domain -> LPAREN DEFINE_KEY domain_def require_def predicates_def . action_def_lst RPAREN
+    (27) action_def_lst -> . action_def action_def_lst
+    (28) action_def_lst -> . action_def
+    (29) action_def -> . LPAREN ACTION_KEY NAME parameters_def action_def_body RPAREN
+
+    LPAREN          shift and go to state 46
+
+    action_def_lst                 shift and go to state 47
+    action_def                     shift and go to state 48
+
+state 27
+
+    (95) objects_def -> LPAREN . OBJECTS_KEY typed_constants_lst RPAREN
+    (96) objects_def -> LPAREN . OBJECTS_KEY constants_lst RPAREN
+    (97) init_def -> LPAREN . INIT_KEY LPAREN AND_KEY ground_predicates_lst RPAREN RPAREN
+    (98) init_def -> LPAREN . INIT_KEY ground_predicates_lst RPAREN
+
+    OBJECTS_KEY     shift and go to state 49
+    INIT_KEY        shift and go to state 50
+
+
+state 28
+
+    (92) plan_problem -> LPAREN DEFINE_KEY plan_problem_def domain_def objects_def . init_def goal_def RPAREN
+    (97) init_def -> . LPAREN INIT_KEY LPAREN AND_KEY ground_predicates_lst RPAREN RPAREN
+    (98) init_def -> . LPAREN INIT_KEY ground_predicates_lst RPAREN
+
+    LPAREN          shift and go to state 51
+
+    init_def                       shift and go to state 52
+
+state 29
+
+    (93) plan_problem -> LPAREN DEFINE_KEY plan_problem_def domain_def init_def . goal_def RPAREN
+    (99) goal_def -> . LPAREN GOAL_KEY LPAREN AND_KEY literals_lst RPAREN RPAREN
+    (100) goal_def -> . LPAREN GOAL_KEY literal RPAREN
+    (101) goal_def -> . LPAREN GOAL_KEY LPAREN ONEOF_KEY effect_body RPAREN RPAREN
+
+    LPAREN          shift and go to state 53
+
+    goal_def                       shift and go to state 54
+
+state 30
+
+    (8) domain_def -> LPAREN DOMAIN_KEY NAME RPAREN .
+
+    LPAREN          reduce using rule 8 (domain_def -> LPAREN DOMAIN_KEY NAME RPAREN .)
+
+
+state 31
+
+    (94) plan_problem_def -> LPAREN PROBLEM_KEY NAME RPAREN .
+
+    LPAREN          reduce using rule 94 (plan_problem_def -> LPAREN PROBLEM_KEY NAME RPAREN .)
+
+
+state 32
+
+    (9) require_def -> LPAREN REQUIREMENTS_KEY require_key_lst . RPAREN
+
+    RPAREN          shift and go to state 55
+
+
+state 33
+
+    (10) require_key_lst -> require_key . require_key_lst
+    (11) require_key_lst -> require_key .
+    (10) require_key_lst -> . require_key require_key_lst
+    (11) require_key_lst -> . require_key
+    (12) require_key -> . STRIPS_KEY
+    (13) require_key -> . EQUALITY_KEY
+    (14) require_key -> . TYPING_KEY
+    (15) require_key -> . PROBABILISTIC_EFFECTS_KEY
+
+    RPAREN          reduce using rule 11 (require_key_lst -> require_key .)
+    STRIPS_KEY      shift and go to state 34
+    EQUALITY_KEY    shift and go to state 35
+    TYPING_KEY      shift and go to state 36
+    PROBABILISTIC_EFFECTS_KEY shift and go to state 37
+
+    require_key                    shift and go to state 33
+    require_key_lst                shift and go to state 56
+
+state 34
+
+    (12) require_key -> STRIPS_KEY .
+
+    STRIPS_KEY      reduce using rule 12 (require_key -> STRIPS_KEY .)
+    EQUALITY_KEY    reduce using rule 12 (require_key -> STRIPS_KEY .)
+    TYPING_KEY      reduce using rule 12 (require_key -> STRIPS_KEY .)
+    PROBABILISTIC_EFFECTS_KEY reduce using rule 12 (require_key -> STRIPS_KEY .)
+    RPAREN          reduce using rule 12 (require_key -> STRIPS_KEY .)
+
+
+state 35
+
+    (13) require_key -> EQUALITY_KEY .
+
+    STRIPS_KEY      reduce using rule 13 (require_key -> EQUALITY_KEY .)
+    EQUALITY_KEY    reduce using rule 13 (require_key -> EQUALITY_KEY .)
+    TYPING_KEY      reduce using rule 13 (require_key -> EQUALITY_KEY .)
+    PROBABILISTIC_EFFECTS_KEY reduce using rule 13 (require_key -> EQUALITY_KEY .)
+    RPAREN          reduce using rule 13 (require_key -> EQUALITY_KEY .)
+
+
+state 36
+
+    (14) require_key -> TYPING_KEY .
+
+    STRIPS_KEY      reduce using rule 14 (require_key -> TYPING_KEY .)
+    EQUALITY_KEY    reduce using rule 14 (require_key -> TYPING_KEY .)
+    TYPING_KEY      reduce using rule 14 (require_key -> TYPING_KEY .)
+    PROBABILISTIC_EFFECTS_KEY reduce using rule 14 (require_key -> TYPING_KEY .)
+    RPAREN          reduce using rule 14 (require_key -> TYPING_KEY .)
+
+
+state 37
+
+    (15) require_key -> PROBABILISTIC_EFFECTS_KEY .
+
+    STRIPS_KEY      reduce using rule 15 (require_key -> PROBABILISTIC_EFFECTS_KEY .)
+    EQUALITY_KEY    reduce using rule 15 (require_key -> PROBABILISTIC_EFFECTS_KEY .)
+    TYPING_KEY      reduce using rule 15 (require_key -> PROBABILISTIC_EFFECTS_KEY .)
+    PROBABILISTIC_EFFECTS_KEY reduce using rule 15 (require_key -> PROBABILISTIC_EFFECTS_KEY .)
+    RPAREN          reduce using rule 15 (require_key -> PROBABILISTIC_EFFECTS_KEY .)
+
+
+state 38
+
+    (16) types_def -> LPAREN TYPES_KEY . typed_names_lst RPAREN
+    (18) typed_names_lst -> . names_lst HYPHEN type typed_names_lst
+    (19) typed_names_lst -> . names_lst HYPHEN type
+    (20) typed_names_lst -> . names_lst
+    (86) names_lst -> . NAME names_lst
+    (87) names_lst -> . NAME
+
+    NAME            shift and go to state 59
+
+    typed_names_lst                shift and go to state 57
+    names_lst                      shift and go to state 58
+
+state 39
+
+    (17) constants_def -> LPAREN CONSTANTS_KEY . typed_names_lst RPAREN
+    (18) typed_names_lst -> . names_lst HYPHEN type typed_names_lst
+    (19) typed_names_lst -> . names_lst HYPHEN type
+    (20) typed_names_lst -> . names_lst
+    (86) names_lst -> . NAME names_lst
+    (87) names_lst -> . NAME
+
+    NAME            shift and go to state 59
+
+    typed_names_lst                shift and go to state 60
+    names_lst                      shift and go to state 58
+
+state 40
+
+    (21) predicates_def -> LPAREN PREDICATES_KEY . predicate_def_lst RPAREN
+    (22) predicate_def_lst -> . predicate_def predicate_def_lst
+    (23) predicate_def_lst -> . predicate_def
+    (24) predicate_def -> . LPAREN NAME typed_variables_lst RPAREN
+    (25) predicate_def -> . LPAREN NAME variables_lst RPAREN
+    (26) predicate_def -> . LPAREN NAME RPAREN
+
+    LPAREN          shift and go to state 61
+
+    predicate_def_lst              shift and go to state 62
+    predicate_def                  shift and go to state 63
+
+state 41
+
+    (17) constants_def -> LPAREN . CONSTANTS_KEY typed_names_lst RPAREN
+    (21) predicates_def -> LPAREN . PREDICATES_KEY predicate_def_lst RPAREN
+
+    CONSTANTS_KEY   shift and go to state 39
+    PREDICATES_KEY  shift and go to state 40
+
+
+state 42
+
+    (4) domain -> LPAREN DEFINE_KEY domain_def require_def types_def constants_def . predicates_def action_def_lst RPAREN
+    (21) predicates_def -> . LPAREN PREDICATES_KEY predicate_def_lst RPAREN
+
+    LPAREN          shift and go to state 44
+
+    predicates_def                 shift and go to state 64
+
+state 43
+
+    (5) domain -> LPAREN DEFINE_KEY domain_def require_def types_def predicates_def . action_def_lst RPAREN
+    (27) action_def_lst -> . action_def action_def_lst
+    (28) action_def_lst -> . action_def
+    (29) action_def -> . LPAREN ACTION_KEY NAME parameters_def action_def_body RPAREN
+
+    LPAREN          shift and go to state 46
+
+    action_def_lst                 shift and go to state 65
+    action_def                     shift and go to state 48
+
+state 44
+
+    (21) predicates_def -> LPAREN . PREDICATES_KEY predicate_def_lst RPAREN
+
+    PREDICATES_KEY  shift and go to state 40
+
+
+state 45
+
+    (6) domain -> LPAREN DEFINE_KEY domain_def require_def constants_def predicates_def . action_def_lst RPAREN
+    (27) action_def_lst -> . action_def action_def_lst
+    (28) action_def_lst -> . action_def
+    (29) action_def -> . LPAREN ACTION_KEY NAME parameters_def action_def_body RPAREN
+
+    LPAREN          shift and go to state 46
+
+    action_def_lst                 shift and go to state 66
+    action_def                     shift and go to state 48
+
+state 46
+
+    (29) action_def -> LPAREN . ACTION_KEY NAME parameters_def action_def_body RPAREN
+
+    ACTION_KEY      shift and go to state 67
+
+
+state 47
+
+    (7) domain -> LPAREN DEFINE_KEY domain_def require_def predicates_def action_def_lst . RPAREN
+
+    RPAREN          shift and go to state 68
+
+
+state 48
+
+    (27) action_def_lst -> action_def . action_def_lst
+    (28) action_def_lst -> action_def .
+    (27) action_def_lst -> . action_def action_def_lst
+    (28) action_def_lst -> . action_def
+    (29) action_def -> . LPAREN ACTION_KEY NAME parameters_def action_def_body RPAREN
+
+    RPAREN          reduce using rule 28 (action_def_lst -> action_def .)
+    LPAREN          shift and go to state 46
+
+    action_def                     shift and go to state 48
+    action_def_lst                 shift and go to state 69
+
+state 49
+
+    (95) objects_def -> LPAREN OBJECTS_KEY . typed_constants_lst RPAREN
+    (96) objects_def -> LPAREN OBJECTS_KEY . constants_lst RPAREN
+    (78) typed_constants_lst -> . constants_lst HYPHEN type typed_constants_lst
+    (79) typed_constants_lst -> . constants_lst HYPHEN type
+    (82) constants_lst -> . constant constants_lst
+    (83) constants_lst -> . constant
+    (89) constant -> . NAME
+
+    NAME            shift and go to state 73
+
+    typed_constants_lst            shift and go to state 70
+    constants_lst                  shift and go to state 71
+    constant                       shift and go to state 72
+
+state 50
+
+    (97) init_def -> LPAREN INIT_KEY . LPAREN AND_KEY ground_predicates_lst RPAREN RPAREN
+    (98) init_def -> LPAREN INIT_KEY . ground_predicates_lst RPAREN
+    (70) ground_predicates_lst -> . ground_predicate ground_predicates_lst
+    (71) ground_predicates_lst -> . ground_predicate
+    (76) ground_predicate -> . LPAREN NAME constants_lst RPAREN
+    (77) ground_predicate -> . LPAREN NAME RPAREN
+
+    LPAREN          shift and go to state 74
+
+    ground_predicates_lst          shift and go to state 75
+    ground_predicate               shift and go to state 76
+
+state 51
+
+    (97) init_def -> LPAREN . INIT_KEY LPAREN AND_KEY ground_predicates_lst RPAREN RPAREN
+    (98) init_def -> LPAREN . INIT_KEY ground_predicates_lst RPAREN
+
+    INIT_KEY        shift and go to state 50
+
+
+state 52
+
+    (92) plan_problem -> LPAREN DEFINE_KEY plan_problem_def domain_def objects_def init_def . goal_def RPAREN
+    (99) goal_def -> . LPAREN GOAL_KEY LPAREN AND_KEY literals_lst RPAREN RPAREN
+    (100) goal_def -> . LPAREN GOAL_KEY literal RPAREN
+    (101) goal_def -> . LPAREN GOAL_KEY LPAREN ONEOF_KEY effect_body RPAREN RPAREN
+
+    LPAREN          shift and go to state 53
+
+    goal_def                       shift and go to state 77
+
+state 53
+
+    (99) goal_def -> LPAREN . GOAL_KEY LPAREN AND_KEY literals_lst RPAREN RPAREN
+    (100) goal_def -> LPAREN . GOAL_KEY literal RPAREN
+    (101) goal_def -> LPAREN . GOAL_KEY LPAREN ONEOF_KEY effect_body RPAREN RPAREN
+
+    GOAL_KEY        shift and go to state 78
+
+
+state 54
+
+    (93) plan_problem -> LPAREN DEFINE_KEY plan_problem_def domain_def init_def goal_def . RPAREN
+
+    RPAREN          shift and go to state 79
+
+
+state 55
+
+    (9) require_def -> LPAREN REQUIREMENTS_KEY require_key_lst RPAREN .
+
+    LPAREN          reduce using rule 9 (require_def -> LPAREN REQUIREMENTS_KEY require_key_lst RPAREN .)
+
+
+state 56
+
+    (10) require_key_lst -> require_key require_key_lst .
+
+    RPAREN          reduce using rule 10 (require_key_lst -> require_key require_key_lst .)
+
+
+state 57
+
+    (16) types_def -> LPAREN TYPES_KEY typed_names_lst . RPAREN
+
+    RPAREN          shift and go to state 80
+
+
+state 58
+
+    (18) typed_names_lst -> names_lst . HYPHEN type typed_names_lst
+    (19) typed_names_lst -> names_lst . HYPHEN type
+    (20) typed_names_lst -> names_lst .
+
+    HYPHEN          shift and go to state 81
+    RPAREN          reduce using rule 20 (typed_names_lst -> names_lst .)
+
+
+state 59
+
+    (86) names_lst -> NAME . names_lst
+    (87) names_lst -> NAME .
+    (86) names_lst -> . NAME names_lst
+    (87) names_lst -> . NAME
+
+    HYPHEN          reduce using rule 87 (names_lst -> NAME .)
+    RPAREN          reduce using rule 87 (names_lst -> NAME .)
+    NAME            shift and go to state 59
+
+    names_lst                      shift and go to state 82
+
+state 60
+
+    (17) constants_def -> LPAREN CONSTANTS_KEY typed_names_lst . RPAREN
+
+    RPAREN          shift and go to state 83
+
+
+state 61
+
+    (24) predicate_def -> LPAREN . NAME typed_variables_lst RPAREN
+    (25) predicate_def -> LPAREN . NAME variables_lst RPAREN
+    (26) predicate_def -> LPAREN . NAME RPAREN
+
+    NAME            shift and go to state 84
+
+
+state 62
+
+    (21) predicates_def -> LPAREN PREDICATES_KEY predicate_def_lst . RPAREN
+
+    RPAREN          shift and go to state 85
+
+
+state 63
+
+    (22) predicate_def_lst -> predicate_def . predicate_def_lst
+    (23) predicate_def_lst -> predicate_def .
+    (22) predicate_def_lst -> . predicate_def predicate_def_lst
+    (23) predicate_def_lst -> . predicate_def
+    (24) predicate_def -> . LPAREN NAME typed_variables_lst RPAREN
+    (25) predicate_def -> . LPAREN NAME variables_lst RPAREN
+    (26) predicate_def -> . LPAREN NAME RPAREN
+
+    RPAREN          reduce using rule 23 (predicate_def_lst -> predicate_def .)
+    LPAREN          shift and go to state 61
+
+    predicate_def                  shift and go to state 63
+    predicate_def_lst              shift and go to state 86
+
+state 64
+
+    (4) domain -> LPAREN DEFINE_KEY domain_def require_def types_def constants_def predicates_def . action_def_lst RPAREN
+    (27) action_def_lst -> . action_def action_def_lst
+    (28) action_def_lst -> . action_def
+    (29) action_def -> . LPAREN ACTION_KEY NAME parameters_def action_def_body RPAREN
+
+    LPAREN          shift and go to state 46
+
+    action_def_lst                 shift and go to state 87
+    action_def                     shift and go to state 48
+
+state 65
+
+    (5) domain -> LPAREN DEFINE_KEY domain_def require_def types_def predicates_def action_def_lst . RPAREN
+
+    RPAREN          shift and go to state 88
+
+
+state 66
+
+    (6) domain -> LPAREN DEFINE_KEY domain_def require_def constants_def predicates_def action_def_lst . RPAREN
+
+    RPAREN          shift and go to state 89
+
+
+state 67
+
+    (29) action_def -> LPAREN ACTION_KEY . NAME parameters_def action_def_body RPAREN
+
+    NAME            shift and go to state 90
+
+
+state 68
+
+    (7) domain -> LPAREN DEFINE_KEY domain_def require_def predicates_def action_def_lst RPAREN .
+
+    LPAREN          reduce using rule 7 (domain -> LPAREN DEFINE_KEY domain_def require_def predicates_def action_def_lst RPAREN .)
+    $end            reduce using rule 7 (domain -> LPAREN DEFINE_KEY domain_def require_def predicates_def action_def_lst RPAREN .)
+
+
+state 69
+
+    (27) action_def_lst -> action_def action_def_lst .
+
+    RPAREN          reduce using rule 27 (action_def_lst -> action_def action_def_lst .)
+
+
+state 70
+
+    (95) objects_def -> LPAREN OBJECTS_KEY typed_constants_lst . RPAREN
+
+    RPAREN          shift and go to state 91
+
+
+state 71
+
+    (96) objects_def -> LPAREN OBJECTS_KEY constants_lst . RPAREN
+    (78) typed_constants_lst -> constants_lst . HYPHEN type typed_constants_lst
+    (79) typed_constants_lst -> constants_lst . HYPHEN type
+
+    RPAREN          shift and go to state 92
+    HYPHEN          shift and go to state 93
+
+
+state 72
+
+    (82) constants_lst -> constant . constants_lst
+    (83) constants_lst -> constant .
+    (82) constants_lst -> . constant constants_lst
+    (83) constants_lst -> . constant
+    (89) constant -> . NAME
+
+    RPAREN          reduce using rule 83 (constants_lst -> constant .)
+    HYPHEN          reduce using rule 83 (constants_lst -> constant .)
+    NAME            shift and go to state 73
+
+    constant                       shift and go to state 72
+    constants_lst                  shift and go to state 94
+
+state 73
+
+    (89) constant -> NAME .
+
+    NAME            reduce using rule 89 (constant -> NAME .)
+    RPAREN          reduce using rule 89 (constant -> NAME .)
+    HYPHEN          reduce using rule 89 (constant -> NAME .)
+
+
+state 74
+
+    (97) init_def -> LPAREN INIT_KEY LPAREN . AND_KEY ground_predicates_lst RPAREN RPAREN
+    (76) ground_predicate -> LPAREN . NAME constants_lst RPAREN
+    (77) ground_predicate -> LPAREN . NAME RPAREN
+
+    AND_KEY         shift and go to state 95
+    NAME            shift and go to state 96
+
+
+state 75
+
+    (98) init_def -> LPAREN INIT_KEY ground_predicates_lst . RPAREN
+
+    RPAREN          shift and go to state 97
+
+
+state 76
+
+    (70) ground_predicates_lst -> ground_predicate . ground_predicates_lst
+    (71) ground_predicates_lst -> ground_predicate .
+    (70) ground_predicates_lst -> . ground_predicate ground_predicates_lst
+    (71) ground_predicates_lst -> . ground_predicate
+    (76) ground_predicate -> . LPAREN NAME constants_lst RPAREN
+    (77) ground_predicate -> . LPAREN NAME RPAREN
+
+    RPAREN          reduce using rule 71 (ground_predicates_lst -> ground_predicate .)
+    LPAREN          shift and go to state 99
+
+    ground_predicate               shift and go to state 76
+    ground_predicates_lst          shift and go to state 98
+
+state 77
+
+    (92) plan_problem -> LPAREN DEFINE_KEY plan_problem_def domain_def objects_def init_def goal_def . RPAREN
+
+    RPAREN          shift and go to state 100
+
+
+state 78
+
+    (99) goal_def -> LPAREN GOAL_KEY . LPAREN AND_KEY literals_lst RPAREN RPAREN
+    (100) goal_def -> LPAREN GOAL_KEY . literal RPAREN
+    (101) goal_def -> LPAREN GOAL_KEY . LPAREN ONEOF_KEY effect_body RPAREN RPAREN
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 101
+
+    literal                        shift and go to state 102
+    predicate                      shift and go to state 103
+
+state 79
+
+    (93) plan_problem -> LPAREN DEFINE_KEY plan_problem_def domain_def init_def goal_def RPAREN .
+
+    $end            reduce using rule 93 (plan_problem -> LPAREN DEFINE_KEY plan_problem_def domain_def init_def goal_def RPAREN .)
+
+
+state 80
+
+    (16) types_def -> LPAREN TYPES_KEY typed_names_lst RPAREN .
+
+    LPAREN          reduce using rule 16 (types_def -> LPAREN TYPES_KEY typed_names_lst RPAREN .)
+
+
+state 81
+
+    (18) typed_names_lst -> names_lst HYPHEN . type typed_names_lst
+    (19) typed_names_lst -> names_lst HYPHEN . type
+    (88) type -> . NAME
+
+    NAME            shift and go to state 105
+
+    type                           shift and go to state 104
+
+state 82
+
+    (86) names_lst -> NAME names_lst .
+
+    HYPHEN          reduce using rule 86 (names_lst -> NAME names_lst .)
+    RPAREN          reduce using rule 86 (names_lst -> NAME names_lst .)
+
+
+state 83
+
+    (17) constants_def -> LPAREN CONSTANTS_KEY typed_names_lst RPAREN .
+
+    LPAREN          reduce using rule 17 (constants_def -> LPAREN CONSTANTS_KEY typed_names_lst RPAREN .)
+
+
+state 84
+
+    (24) predicate_def -> LPAREN NAME . typed_variables_lst RPAREN
+    (25) predicate_def -> LPAREN NAME . variables_lst RPAREN
+    (26) predicate_def -> LPAREN NAME . RPAREN
+    (80) typed_variables_lst -> . variables_lst HYPHEN type typed_variables_lst
+    (81) typed_variables_lst -> . variables_lst HYPHEN type
+    (84) variables_lst -> . variable variables_lst
+    (85) variables_lst -> . variable
+    (90) variable -> . VARIABLE
+
+    RPAREN          shift and go to state 107
+    VARIABLE        shift and go to state 110
+
+    typed_variables_lst            shift and go to state 106
+    variables_lst                  shift and go to state 108
+    variable                       shift and go to state 109
+
+state 85
+
+    (21) predicates_def -> LPAREN PREDICATES_KEY predicate_def_lst RPAREN .
+
+    LPAREN          reduce using rule 21 (predicates_def -> LPAREN PREDICATES_KEY predicate_def_lst RPAREN .)
+
+
+state 86
+
+    (22) predicate_def_lst -> predicate_def predicate_def_lst .
+
+    RPAREN          reduce using rule 22 (predicate_def_lst -> predicate_def predicate_def_lst .)
+
+
+state 87
+
+    (4) domain -> LPAREN DEFINE_KEY domain_def require_def types_def constants_def predicates_def action_def_lst . RPAREN
+
+    RPAREN          shift and go to state 111
+
+
+state 88
+
+    (5) domain -> LPAREN DEFINE_KEY domain_def require_def types_def predicates_def action_def_lst RPAREN .
+
+    LPAREN          reduce using rule 5 (domain -> LPAREN DEFINE_KEY domain_def require_def types_def predicates_def action_def_lst RPAREN .)
+    $end            reduce using rule 5 (domain -> LPAREN DEFINE_KEY domain_def require_def types_def predicates_def action_def_lst RPAREN .)
+
+
+state 89
+
+    (6) domain -> LPAREN DEFINE_KEY domain_def require_def constants_def predicates_def action_def_lst RPAREN .
+
+    LPAREN          reduce using rule 6 (domain -> LPAREN DEFINE_KEY domain_def require_def constants_def predicates_def action_def_lst RPAREN .)
+    $end            reduce using rule 6 (domain -> LPAREN DEFINE_KEY domain_def require_def constants_def predicates_def action_def_lst RPAREN .)
+
+
+state 90
+
+    (29) action_def -> LPAREN ACTION_KEY NAME . parameters_def action_def_body RPAREN
+    (30) parameters_def -> . PARAMETERS_KEY LPAREN typed_variables_lst RPAREN
+    (31) parameters_def -> . PARAMETERS_KEY LPAREN variables_lst RPAREN
+    (32) parameters_def -> . PARAMETERS_KEY LPAREN RPAREN
+
+    PARAMETERS_KEY  shift and go to state 113
+
+    parameters_def                 shift and go to state 112
+
+state 91
+
+    (95) objects_def -> LPAREN OBJECTS_KEY typed_constants_lst RPAREN .
+
+    LPAREN          reduce using rule 95 (objects_def -> LPAREN OBJECTS_KEY typed_constants_lst RPAREN .)
+
+
+state 92
+
+    (96) objects_def -> LPAREN OBJECTS_KEY constants_lst RPAREN .
+
+    LPAREN          reduce using rule 96 (objects_def -> LPAREN OBJECTS_KEY constants_lst RPAREN .)
+
+
+state 93
+
+    (78) typed_constants_lst -> constants_lst HYPHEN . type typed_constants_lst
+    (79) typed_constants_lst -> constants_lst HYPHEN . type
+    (88) type -> . NAME
+
+    NAME            shift and go to state 105
+
+    type                           shift and go to state 114
+
+state 94
+
+    (82) constants_lst -> constant constants_lst .
+
+    RPAREN          reduce using rule 82 (constants_lst -> constant constants_lst .)
+    HYPHEN          reduce using rule 82 (constants_lst -> constant constants_lst .)
+
+
+state 95
+
+    (97) init_def -> LPAREN INIT_KEY LPAREN AND_KEY . ground_predicates_lst RPAREN RPAREN
+    (70) ground_predicates_lst -> . ground_predicate ground_predicates_lst
+    (71) ground_predicates_lst -> . ground_predicate
+    (76) ground_predicate -> . LPAREN NAME constants_lst RPAREN
+    (77) ground_predicate -> . LPAREN NAME RPAREN
+
+    LPAREN          shift and go to state 99
+
+    ground_predicates_lst          shift and go to state 115
+    ground_predicate               shift and go to state 76
+
+state 96
+
+    (76) ground_predicate -> LPAREN NAME . constants_lst RPAREN
+    (77) ground_predicate -> LPAREN NAME . RPAREN
+    (82) constants_lst -> . constant constants_lst
+    (83) constants_lst -> . constant
+    (89) constant -> . NAME
+
+    RPAREN          shift and go to state 117
+    NAME            shift and go to state 73
+
+    constants_lst                  shift and go to state 116
+    constant                       shift and go to state 72
+
+state 97
+
+    (98) init_def -> LPAREN INIT_KEY ground_predicates_lst RPAREN .
+
+    LPAREN          reduce using rule 98 (init_def -> LPAREN INIT_KEY ground_predicates_lst RPAREN .)
+
+
+state 98
+
+    (70) ground_predicates_lst -> ground_predicate ground_predicates_lst .
+
+    RPAREN          reduce using rule 70 (ground_predicates_lst -> ground_predicate ground_predicates_lst .)
+
+
+state 99
+
+    (76) ground_predicate -> LPAREN . NAME constants_lst RPAREN
+    (77) ground_predicate -> LPAREN . NAME RPAREN
+
+    NAME            shift and go to state 96
+
+
+state 100
+
+    (92) plan_problem -> LPAREN DEFINE_KEY plan_problem_def domain_def objects_def init_def goal_def RPAREN .
+
+    $end            reduce using rule 92 (plan_problem -> LPAREN DEFINE_KEY plan_problem_def domain_def objects_def init_def goal_def RPAREN .)
+
+
+state 101
+
+    (99) goal_def -> LPAREN GOAL_KEY LPAREN . AND_KEY literals_lst RPAREN RPAREN
+    (101) goal_def -> LPAREN GOAL_KEY LPAREN . ONEOF_KEY effect_body RPAREN RPAREN
+    (68) literal -> LPAREN . NOT_KEY predicate RPAREN
+    (72) predicate -> LPAREN . NAME variables_lst RPAREN
+    (73) predicate -> LPAREN . EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> LPAREN . NAME RPAREN
+    (75) predicate -> LPAREN . NAME constants_lst RPAREN
+
+    AND_KEY         shift and go to state 118
+    ONEOF_KEY       shift and go to state 119
+    NOT_KEY         shift and go to state 120
+    NAME            shift and go to state 121
+    EQUALS          shift and go to state 122
+
+
+state 102
+
+    (100) goal_def -> LPAREN GOAL_KEY literal . RPAREN
+
+    RPAREN          shift and go to state 123
+
+
+state 103
+
+    (69) literal -> predicate .
+
+    RPAREN          reduce using rule 69 (literal -> predicate .)
+    LPAREN          reduce using rule 69 (literal -> predicate .)
+    EFFECT_KEY      reduce using rule 69 (literal -> predicate .)
+
+
+state 104
+
+    (18) typed_names_lst -> names_lst HYPHEN type . typed_names_lst
+    (19) typed_names_lst -> names_lst HYPHEN type .
+    (18) typed_names_lst -> . names_lst HYPHEN type typed_names_lst
+    (19) typed_names_lst -> . names_lst HYPHEN type
+    (20) typed_names_lst -> . names_lst
+    (86) names_lst -> . NAME names_lst
+    (87) names_lst -> . NAME
+
+    RPAREN          reduce using rule 19 (typed_names_lst -> names_lst HYPHEN type .)
+    NAME            shift and go to state 59
+
+    names_lst                      shift and go to state 58
+    typed_names_lst                shift and go to state 124
+
+state 105
+
+    (88) type -> NAME .
+
+    NAME            reduce using rule 88 (type -> NAME .)
+    RPAREN          reduce using rule 88 (type -> NAME .)
+    VARIABLE        reduce using rule 88 (type -> NAME .)
+
+
+state 106
+
+    (24) predicate_def -> LPAREN NAME typed_variables_lst . RPAREN
+
+    RPAREN          shift and go to state 125
+
+
+state 107
+
+    (26) predicate_def -> LPAREN NAME RPAREN .
+
+    LPAREN          reduce using rule 26 (predicate_def -> LPAREN NAME RPAREN .)
+    RPAREN          reduce using rule 26 (predicate_def -> LPAREN NAME RPAREN .)
+
+
+state 108
+
+    (25) predicate_def -> LPAREN NAME variables_lst . RPAREN
+    (80) typed_variables_lst -> variables_lst . HYPHEN type typed_variables_lst
+    (81) typed_variables_lst -> variables_lst . HYPHEN type
+
+    RPAREN          shift and go to state 126
+    HYPHEN          shift and go to state 127
+
+
+state 109
+
+    (84) variables_lst -> variable . variables_lst
+    (85) variables_lst -> variable .
+    (84) variables_lst -> . variable variables_lst
+    (85) variables_lst -> . variable
+    (90) variable -> . VARIABLE
+
+    RPAREN          reduce using rule 85 (variables_lst -> variable .)
+    HYPHEN          reduce using rule 85 (variables_lst -> variable .)
+    VARIABLE        shift and go to state 110
+
+    variable                       shift and go to state 109
+    variables_lst                  shift and go to state 128
+
+state 110
+
+    (90) variable -> VARIABLE .
+
+    VARIABLE        reduce using rule 90 (variable -> VARIABLE .)
+    RPAREN          reduce using rule 90 (variable -> VARIABLE .)
+    HYPHEN          reduce using rule 90 (variable -> VARIABLE .)
+
+
+state 111
+
+    (4) domain -> LPAREN DEFINE_KEY domain_def require_def types_def constants_def predicates_def action_def_lst RPAREN .
+
+    LPAREN          reduce using rule 4 (domain -> LPAREN DEFINE_KEY domain_def require_def types_def constants_def predicates_def action_def_lst RPAREN .)
+    $end            reduce using rule 4 (domain -> LPAREN DEFINE_KEY domain_def require_def types_def constants_def predicates_def action_def_lst RPAREN .)
+
+
+state 112
+
+    (29) action_def -> LPAREN ACTION_KEY NAME parameters_def . action_def_body RPAREN
+    (33) action_def_body -> . precond_def effects_def
+    (34) precond_def -> . PRECONDITION_KEY LPAREN AND_KEY literals_lst RPAREN
+    (35) precond_def -> . PRECONDITION_KEY literal
+
+    PRECONDITION_KEY shift and go to state 131
+
+    action_def_body                shift and go to state 129
+    precond_def                    shift and go to state 130
+
+state 113
+
+    (30) parameters_def -> PARAMETERS_KEY . LPAREN typed_variables_lst RPAREN
+    (31) parameters_def -> PARAMETERS_KEY . LPAREN variables_lst RPAREN
+    (32) parameters_def -> PARAMETERS_KEY . LPAREN RPAREN
+
+    LPAREN          shift and go to state 132
+
+
+state 114
+
+    (78) typed_constants_lst -> constants_lst HYPHEN type . typed_constants_lst
+    (79) typed_constants_lst -> constants_lst HYPHEN type .
+    (78) typed_constants_lst -> . constants_lst HYPHEN type typed_constants_lst
+    (79) typed_constants_lst -> . constants_lst HYPHEN type
+    (82) constants_lst -> . constant constants_lst
+    (83) constants_lst -> . constant
+    (89) constant -> . NAME
+
+    RPAREN          reduce using rule 79 (typed_constants_lst -> constants_lst HYPHEN type .)
+    NAME            shift and go to state 73
+
+    constants_lst                  shift and go to state 133
+    typed_constants_lst            shift and go to state 134
+    constant                       shift and go to state 72
+
+state 115
+
+    (97) init_def -> LPAREN INIT_KEY LPAREN AND_KEY ground_predicates_lst . RPAREN RPAREN
+
+    RPAREN          shift and go to state 135
+
+
+state 116
+
+    (76) ground_predicate -> LPAREN NAME constants_lst . RPAREN
+
+    RPAREN          shift and go to state 136
+
+
+state 117
+
+    (77) ground_predicate -> LPAREN NAME RPAREN .
+
+    LPAREN          reduce using rule 77 (ground_predicate -> LPAREN NAME RPAREN .)
+    RPAREN          reduce using rule 77 (ground_predicate -> LPAREN NAME RPAREN .)
+
+
+state 118
+
+    (99) goal_def -> LPAREN GOAL_KEY LPAREN AND_KEY . literals_lst RPAREN RPAREN
+    (58) literals_lst -> . literal literals_lst
+    (59) literals_lst -> . literal
+    (60) literals_lst -> . or_literal literals_lst
+    (61) literals_lst -> . or_literal
+    (62) literals_lst -> . and_literal literals_lst
+    (63) literals_lst -> . and_literal
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (66) or_literal -> . LPAREN OR_KEY literals_lst RPAREN
+    (67) or_literal -> . literal
+    (64) and_literal -> . LPAREN AND_KEY literals_lst RPAREN
+    (65) and_literal -> . literal
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 137
+
+    literals_lst                   shift and go to state 138
+    literal                        shift and go to state 139
+    or_literal                     shift and go to state 140
+    and_literal                    shift and go to state 141
+    predicate                      shift and go to state 103
+
+state 119
+
+    (101) goal_def -> LPAREN GOAL_KEY LPAREN ONEOF_KEY . effect_body RPAREN RPAREN
+    (37) effect_body -> . LPAREN NAME unlabeled_effect RPAREN
+    (38) effect_body -> . effect_body LPAREN NAME unlabeled_effect RPAREN
+    (39) effect_body -> . unlabeled_effect
+    (40) unlabeled_effect -> . LPAREN ONEOF_KEY effect_body RPAREN
+    (41) unlabeled_effect -> . deterministic_effect unlabeled_effect
+    (42) unlabeled_effect -> . deterministic_effect
+    (43) deterministic_effect -> . LPAREN AND_KEY effects_lst RPAREN
+    (44) deterministic_effect -> . effects_lst
+    (50) effects_lst -> . effect effects_lst
+    (51) effects_lst -> . effect
+    (54) effect -> . literal
+    (55) effect -> . LPAREN PROBABILISTIC_KEY PROBABILITY literal RPAREN
+    (56) effect -> . LPAREN WHEN_KEY when_effects RPAREN
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 142
+
+    effect_body                    shift and go to state 143
+    unlabeled_effect               shift and go to state 144
+    deterministic_effect           shift and go to state 145
+    effects_lst                    shift and go to state 146
+    effect                         shift and go to state 147
+    literal                        shift and go to state 148
+    predicate                      shift and go to state 103
+
+state 120
+
+    (68) literal -> LPAREN NOT_KEY . predicate RPAREN
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 149
+
+    predicate                      shift and go to state 150
+
+state 121
+
+    (72) predicate -> LPAREN NAME . variables_lst RPAREN
+    (74) predicate -> LPAREN NAME . RPAREN
+    (75) predicate -> LPAREN NAME . constants_lst RPAREN
+    (84) variables_lst -> . variable variables_lst
+    (85) variables_lst -> . variable
+    (82) constants_lst -> . constant constants_lst
+    (83) constants_lst -> . constant
+    (90) variable -> . VARIABLE
+    (89) constant -> . NAME
+
+    RPAREN          shift and go to state 152
+    VARIABLE        shift and go to state 110
+    NAME            shift and go to state 73
+
+    variables_lst                  shift and go to state 151
+    constants_lst                  shift and go to state 153
+    variable                       shift and go to state 109
+    constant                       shift and go to state 72
+
+state 122
+
+    (73) predicate -> LPAREN EQUALS . VARIABLE VARIABLE RPAREN
+
+    VARIABLE        shift and go to state 154
+
+
+state 123
+
+    (100) goal_def -> LPAREN GOAL_KEY literal RPAREN .
+
+    RPAREN          reduce using rule 100 (goal_def -> LPAREN GOAL_KEY literal RPAREN .)
+
+
+state 124
+
+    (18) typed_names_lst -> names_lst HYPHEN type typed_names_lst .
+
+    RPAREN          reduce using rule 18 (typed_names_lst -> names_lst HYPHEN type typed_names_lst .)
+
+
+state 125
+
+    (24) predicate_def -> LPAREN NAME typed_variables_lst RPAREN .
+
+    LPAREN          reduce using rule 24 (predicate_def -> LPAREN NAME typed_variables_lst RPAREN .)
+    RPAREN          reduce using rule 24 (predicate_def -> LPAREN NAME typed_variables_lst RPAREN .)
+
+
+state 126
+
+    (25) predicate_def -> LPAREN NAME variables_lst RPAREN .
+
+    LPAREN          reduce using rule 25 (predicate_def -> LPAREN NAME variables_lst RPAREN .)
+    RPAREN          reduce using rule 25 (predicate_def -> LPAREN NAME variables_lst RPAREN .)
+
+
+state 127
+
+    (80) typed_variables_lst -> variables_lst HYPHEN . type typed_variables_lst
+    (81) typed_variables_lst -> variables_lst HYPHEN . type
+    (88) type -> . NAME
+
+    NAME            shift and go to state 105
+
+    type                           shift and go to state 155
+
+state 128
+
+    (84) variables_lst -> variable variables_lst .
+
+    RPAREN          reduce using rule 84 (variables_lst -> variable variables_lst .)
+    HYPHEN          reduce using rule 84 (variables_lst -> variable variables_lst .)
+
+
+state 129
+
+    (29) action_def -> LPAREN ACTION_KEY NAME parameters_def action_def_body . RPAREN
+
+    RPAREN          shift and go to state 156
+
+
+state 130
+
+    (33) action_def_body -> precond_def . effects_def
+    (36) effects_def -> . EFFECT_KEY effect_body
+
+    EFFECT_KEY      shift and go to state 158
+
+    effects_def                    shift and go to state 157
+
+state 131
+
+    (34) precond_def -> PRECONDITION_KEY . LPAREN AND_KEY literals_lst RPAREN
+    (35) precond_def -> PRECONDITION_KEY . literal
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 159
+
+    literal                        shift and go to state 160
+    predicate                      shift and go to state 103
+
+state 132
+
+    (30) parameters_def -> PARAMETERS_KEY LPAREN . typed_variables_lst RPAREN
+    (31) parameters_def -> PARAMETERS_KEY LPAREN . variables_lst RPAREN
+    (32) parameters_def -> PARAMETERS_KEY LPAREN . RPAREN
+    (80) typed_variables_lst -> . variables_lst HYPHEN type typed_variables_lst
+    (81) typed_variables_lst -> . variables_lst HYPHEN type
+    (84) variables_lst -> . variable variables_lst
+    (85) variables_lst -> . variable
+    (90) variable -> . VARIABLE
+
+    RPAREN          shift and go to state 162
+    VARIABLE        shift and go to state 110
+
+    typed_variables_lst            shift and go to state 161
+    variables_lst                  shift and go to state 163
+    variable                       shift and go to state 109
+
+state 133
+
+    (78) typed_constants_lst -> constants_lst . HYPHEN type typed_constants_lst
+    (79) typed_constants_lst -> constants_lst . HYPHEN type
+
+    HYPHEN          shift and go to state 93
+
+
+state 134
+
+    (78) typed_constants_lst -> constants_lst HYPHEN type typed_constants_lst .
+
+    RPAREN          reduce using rule 78 (typed_constants_lst -> constants_lst HYPHEN type typed_constants_lst .)
+
+
+state 135
+
+    (97) init_def -> LPAREN INIT_KEY LPAREN AND_KEY ground_predicates_lst RPAREN . RPAREN
+
+    RPAREN          shift and go to state 164
+
+
+state 136
+
+    (76) ground_predicate -> LPAREN NAME constants_lst RPAREN .
+
+    LPAREN          reduce using rule 76 (ground_predicate -> LPAREN NAME constants_lst RPAREN .)
+    RPAREN          reduce using rule 76 (ground_predicate -> LPAREN NAME constants_lst RPAREN .)
+
+
+state 137
+
+    (68) literal -> LPAREN . NOT_KEY predicate RPAREN
+    (66) or_literal -> LPAREN . OR_KEY literals_lst RPAREN
+    (64) and_literal -> LPAREN . AND_KEY literals_lst RPAREN
+    (72) predicate -> LPAREN . NAME variables_lst RPAREN
+    (73) predicate -> LPAREN . EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> LPAREN . NAME RPAREN
+    (75) predicate -> LPAREN . NAME constants_lst RPAREN
+
+    NOT_KEY         shift and go to state 120
+    OR_KEY          shift and go to state 165
+    AND_KEY         shift and go to state 166
+    NAME            shift and go to state 121
+    EQUALS          shift and go to state 122
+
+
+state 138
+
+    (99) goal_def -> LPAREN GOAL_KEY LPAREN AND_KEY literals_lst . RPAREN RPAREN
+
+    RPAREN          shift and go to state 167
+
+
+state 139
+
+    (58) literals_lst -> literal . literals_lst
+    (59) literals_lst -> literal .
+    (67) or_literal -> literal .
+    (65) and_literal -> literal .
+    (58) literals_lst -> . literal literals_lst
+    (59) literals_lst -> . literal
+    (60) literals_lst -> . or_literal literals_lst
+    (61) literals_lst -> . or_literal
+    (62) literals_lst -> . and_literal literals_lst
+    (63) literals_lst -> . and_literal
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (66) or_literal -> . LPAREN OR_KEY literals_lst RPAREN
+    (67) or_literal -> . literal
+    (64) and_literal -> . LPAREN AND_KEY literals_lst RPAREN
+    (65) and_literal -> . literal
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+  ! reduce/reduce conflict for RPAREN resolved using rule 59 (literals_lst -> literal .)
+  ! reduce/reduce conflict for LPAREN resolved using rule 65 (and_literal -> literal .)
+  ! reduce/reduce conflict for RPAREN resolved using rule 59 (literals_lst -> literal .)
+  ! shift/reduce conflict for LPAREN resolved as shift
+    RPAREN          reduce using rule 59 (literals_lst -> literal .)
+    LPAREN          shift and go to state 137
+
+  ! LPAREN          [ reduce using rule 67 (or_literal -> literal .) ]
+  ! RPAREN          [ reduce using rule 67 (or_literal -> literal .) ]
+  ! LPAREN          [ reduce using rule 65 (and_literal -> literal .) ]
+  ! RPAREN          [ reduce using rule 65 (and_literal -> literal .) ]
+
+    literal                        shift and go to state 139
+    literals_lst                   shift and go to state 168
+    or_literal                     shift and go to state 140
+    and_literal                    shift and go to state 141
+    predicate                      shift and go to state 103
+
+state 140
+
+    (60) literals_lst -> or_literal . literals_lst
+    (61) literals_lst -> or_literal .
+    (58) literals_lst -> . literal literals_lst
+    (59) literals_lst -> . literal
+    (60) literals_lst -> . or_literal literals_lst
+    (61) literals_lst -> . or_literal
+    (62) literals_lst -> . and_literal literals_lst
+    (63) literals_lst -> . and_literal
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (66) or_literal -> . LPAREN OR_KEY literals_lst RPAREN
+    (67) or_literal -> . literal
+    (64) and_literal -> . LPAREN AND_KEY literals_lst RPAREN
+    (65) and_literal -> . literal
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    RPAREN          reduce using rule 61 (literals_lst -> or_literal .)
+    LPAREN          shift and go to state 137
+
+    or_literal                     shift and go to state 140
+    literals_lst                   shift and go to state 169
+    literal                        shift and go to state 139
+    and_literal                    shift and go to state 141
+    predicate                      shift and go to state 103
+
+state 141
+
+    (62) literals_lst -> and_literal . literals_lst
+    (63) literals_lst -> and_literal .
+    (58) literals_lst -> . literal literals_lst
+    (59) literals_lst -> . literal
+    (60) literals_lst -> . or_literal literals_lst
+    (61) literals_lst -> . or_literal
+    (62) literals_lst -> . and_literal literals_lst
+    (63) literals_lst -> . and_literal
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (66) or_literal -> . LPAREN OR_KEY literals_lst RPAREN
+    (67) or_literal -> . literal
+    (64) and_literal -> . LPAREN AND_KEY literals_lst RPAREN
+    (65) and_literal -> . literal
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    RPAREN          reduce using rule 63 (literals_lst -> and_literal .)
+    LPAREN          shift and go to state 137
+
+    and_literal                    shift and go to state 141
+    literals_lst                   shift and go to state 170
+    literal                        shift and go to state 139
+    or_literal                     shift and go to state 140
+    predicate                      shift and go to state 103
+
+state 142
+
+    (37) effect_body -> LPAREN . NAME unlabeled_effect RPAREN
+    (40) unlabeled_effect -> LPAREN . ONEOF_KEY effect_body RPAREN
+    (43) deterministic_effect -> LPAREN . AND_KEY effects_lst RPAREN
+    (55) effect -> LPAREN . PROBABILISTIC_KEY PROBABILITY literal RPAREN
+    (56) effect -> LPAREN . WHEN_KEY when_effects RPAREN
+    (68) literal -> LPAREN . NOT_KEY predicate RPAREN
+    (72) predicate -> LPAREN . NAME variables_lst RPAREN
+    (73) predicate -> LPAREN . EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> LPAREN . NAME RPAREN
+    (75) predicate -> LPAREN . NAME constants_lst RPAREN
+
+    NAME            shift and go to state 171
+    ONEOF_KEY       shift and go to state 172
+    AND_KEY         shift and go to state 173
+    PROBABILISTIC_KEY shift and go to state 174
+    WHEN_KEY        shift and go to state 175
+    NOT_KEY         shift and go to state 120
+    EQUALS          shift and go to state 122
+
+
+state 143
+
+    (101) goal_def -> LPAREN GOAL_KEY LPAREN ONEOF_KEY effect_body . RPAREN RPAREN
+    (38) effect_body -> effect_body . LPAREN NAME unlabeled_effect RPAREN
+
+    RPAREN          shift and go to state 177
+    LPAREN          shift and go to state 176
+
+
+state 144
+
+    (39) effect_body -> unlabeled_effect .
+
+    RPAREN          reduce using rule 39 (effect_body -> unlabeled_effect .)
+    LPAREN          reduce using rule 39 (effect_body -> unlabeled_effect .)
+
+
+state 145
+
+    (41) unlabeled_effect -> deterministic_effect . unlabeled_effect
+    (42) unlabeled_effect -> deterministic_effect .
+    (40) unlabeled_effect -> . LPAREN ONEOF_KEY effect_body RPAREN
+    (41) unlabeled_effect -> . deterministic_effect unlabeled_effect
+    (42) unlabeled_effect -> . deterministic_effect
+    (43) deterministic_effect -> . LPAREN AND_KEY effects_lst RPAREN
+    (44) deterministic_effect -> . effects_lst
+    (50) effects_lst -> . effect effects_lst
+    (51) effects_lst -> . effect
+    (54) effect -> . literal
+    (55) effect -> . LPAREN PROBABILISTIC_KEY PROBABILITY literal RPAREN
+    (56) effect -> . LPAREN WHEN_KEY when_effects RPAREN
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+  ! shift/reduce conflict for LPAREN resolved as shift
+    RPAREN          reduce using rule 42 (unlabeled_effect -> deterministic_effect .)
+    LPAREN          shift and go to state 179
+
+  ! LPAREN          [ reduce using rule 42 (unlabeled_effect -> deterministic_effect .) ]
+
+    deterministic_effect           shift and go to state 145
+    unlabeled_effect               shift and go to state 178
+    effects_lst                    shift and go to state 146
+    effect                         shift and go to state 147
+    literal                        shift and go to state 148
+    predicate                      shift and go to state 103
+
+state 146
+
+    (44) deterministic_effect -> effects_lst .
+
+    LPAREN          reduce using rule 44 (deterministic_effect -> effects_lst .)
+    RPAREN          reduce using rule 44 (deterministic_effect -> effects_lst .)
+
+
+state 147
+
+    (50) effects_lst -> effect . effects_lst
+    (51) effects_lst -> effect .
+    (50) effects_lst -> . effect effects_lst
+    (51) effects_lst -> . effect
+    (54) effect -> . literal
+    (55) effect -> . LPAREN PROBABILISTIC_KEY PROBABILITY literal RPAREN
+    (56) effect -> . LPAREN WHEN_KEY when_effects RPAREN
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+  ! shift/reduce conflict for LPAREN resolved as shift
+    RPAREN          reduce using rule 51 (effects_lst -> effect .)
+    LPAREN          shift and go to state 181
+
+  ! LPAREN          [ reduce using rule 51 (effects_lst -> effect .) ]
+
+    effect                         shift and go to state 147
+    effects_lst                    shift and go to state 180
+    literal                        shift and go to state 148
+    predicate                      shift and go to state 103
+
+state 148
+
+    (54) effect -> literal .
+
+    LPAREN          reduce using rule 54 (effect -> literal .)
+    RPAREN          reduce using rule 54 (effect -> literal .)
+
+
+state 149
+
+    (72) predicate -> LPAREN . NAME variables_lst RPAREN
+    (73) predicate -> LPAREN . EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> LPAREN . NAME RPAREN
+    (75) predicate -> LPAREN . NAME constants_lst RPAREN
+
+    NAME            shift and go to state 121
+    EQUALS          shift and go to state 122
+
+
+state 150
+
+    (68) literal -> LPAREN NOT_KEY predicate . RPAREN
+
+    RPAREN          shift and go to state 182
+
+
+state 151
+
+    (72) predicate -> LPAREN NAME variables_lst . RPAREN
+
+    RPAREN          shift and go to state 183
+
+
+state 152
+
+    (74) predicate -> LPAREN NAME RPAREN .
+
+    RPAREN          reduce using rule 74 (predicate -> LPAREN NAME RPAREN .)
+    LPAREN          reduce using rule 74 (predicate -> LPAREN NAME RPAREN .)
+    EFFECT_KEY      reduce using rule 74 (predicate -> LPAREN NAME RPAREN .)
+
+
+state 153
+
+    (75) predicate -> LPAREN NAME constants_lst . RPAREN
+
+    RPAREN          shift and go to state 184
+
+
+state 154
+
+    (73) predicate -> LPAREN EQUALS VARIABLE . VARIABLE RPAREN
+
+    VARIABLE        shift and go to state 185
+
+
+state 155
+
+    (80) typed_variables_lst -> variables_lst HYPHEN type . typed_variables_lst
+    (81) typed_variables_lst -> variables_lst HYPHEN type .
+    (80) typed_variables_lst -> . variables_lst HYPHEN type typed_variables_lst
+    (81) typed_variables_lst -> . variables_lst HYPHEN type
+    (84) variables_lst -> . variable variables_lst
+    (85) variables_lst -> . variable
+    (90) variable -> . VARIABLE
+
+    RPAREN          reduce using rule 81 (typed_variables_lst -> variables_lst HYPHEN type .)
+    VARIABLE        shift and go to state 110
+
+    variables_lst                  shift and go to state 186
+    typed_variables_lst            shift and go to state 187
+    variable                       shift and go to state 109
+
+state 156
+
+    (29) action_def -> LPAREN ACTION_KEY NAME parameters_def action_def_body RPAREN .
+
+    LPAREN          reduce using rule 29 (action_def -> LPAREN ACTION_KEY NAME parameters_def action_def_body RPAREN .)
+    RPAREN          reduce using rule 29 (action_def -> LPAREN ACTION_KEY NAME parameters_def action_def_body RPAREN .)
+
+
+state 157
+
+    (33) action_def_body -> precond_def effects_def .
+
+    RPAREN          reduce using rule 33 (action_def_body -> precond_def effects_def .)
+
+
+state 158
+
+    (36) effects_def -> EFFECT_KEY . effect_body
+    (37) effect_body -> . LPAREN NAME unlabeled_effect RPAREN
+    (38) effect_body -> . effect_body LPAREN NAME unlabeled_effect RPAREN
+    (39) effect_body -> . unlabeled_effect
+    (40) unlabeled_effect -> . LPAREN ONEOF_KEY effect_body RPAREN
+    (41) unlabeled_effect -> . deterministic_effect unlabeled_effect
+    (42) unlabeled_effect -> . deterministic_effect
+    (43) deterministic_effect -> . LPAREN AND_KEY effects_lst RPAREN
+    (44) deterministic_effect -> . effects_lst
+    (50) effects_lst -> . effect effects_lst
+    (51) effects_lst -> . effect
+    (54) effect -> . literal
+    (55) effect -> . LPAREN PROBABILISTIC_KEY PROBABILITY literal RPAREN
+    (56) effect -> . LPAREN WHEN_KEY when_effects RPAREN
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 142
+
+    effect_body                    shift and go to state 188
+    unlabeled_effect               shift and go to state 144
+    deterministic_effect           shift and go to state 145
+    effects_lst                    shift and go to state 146
+    effect                         shift and go to state 147
+    literal                        shift and go to state 148
+    predicate                      shift and go to state 103
+
+state 159
+
+    (34) precond_def -> PRECONDITION_KEY LPAREN . AND_KEY literals_lst RPAREN
+    (68) literal -> LPAREN . NOT_KEY predicate RPAREN
+    (72) predicate -> LPAREN . NAME variables_lst RPAREN
+    (73) predicate -> LPAREN . EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> LPAREN . NAME RPAREN
+    (75) predicate -> LPAREN . NAME constants_lst RPAREN
+
+    AND_KEY         shift and go to state 189
+    NOT_KEY         shift and go to state 120
+    NAME            shift and go to state 121
+    EQUALS          shift and go to state 122
+
+
+state 160
+
+    (35) precond_def -> PRECONDITION_KEY literal .
+
+    EFFECT_KEY      reduce using rule 35 (precond_def -> PRECONDITION_KEY literal .)
+
+
+state 161
+
+    (30) parameters_def -> PARAMETERS_KEY LPAREN typed_variables_lst . RPAREN
+
+    RPAREN          shift and go to state 190
+
+
+state 162
+
+    (32) parameters_def -> PARAMETERS_KEY LPAREN RPAREN .
+
+    PRECONDITION_KEY reduce using rule 32 (parameters_def -> PARAMETERS_KEY LPAREN RPAREN .)
+
+
+state 163
+
+    (31) parameters_def -> PARAMETERS_KEY LPAREN variables_lst . RPAREN
+    (80) typed_variables_lst -> variables_lst . HYPHEN type typed_variables_lst
+    (81) typed_variables_lst -> variables_lst . HYPHEN type
+
+    RPAREN          shift and go to state 191
+    HYPHEN          shift and go to state 127
+
+
+state 164
+
+    (97) init_def -> LPAREN INIT_KEY LPAREN AND_KEY ground_predicates_lst RPAREN RPAREN .
+
+    LPAREN          reduce using rule 97 (init_def -> LPAREN INIT_KEY LPAREN AND_KEY ground_predicates_lst RPAREN RPAREN .)
+
+
+state 165
+
+    (66) or_literal -> LPAREN OR_KEY . literals_lst RPAREN
+    (58) literals_lst -> . literal literals_lst
+    (59) literals_lst -> . literal
+    (60) literals_lst -> . or_literal literals_lst
+    (61) literals_lst -> . or_literal
+    (62) literals_lst -> . and_literal literals_lst
+    (63) literals_lst -> . and_literal
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (66) or_literal -> . LPAREN OR_KEY literals_lst RPAREN
+    (67) or_literal -> . literal
+    (64) and_literal -> . LPAREN AND_KEY literals_lst RPAREN
+    (65) and_literal -> . literal
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 137
+
+    literals_lst                   shift and go to state 192
+    literal                        shift and go to state 139
+    or_literal                     shift and go to state 140
+    and_literal                    shift and go to state 141
+    predicate                      shift and go to state 103
+
+state 166
+
+    (64) and_literal -> LPAREN AND_KEY . literals_lst RPAREN
+    (58) literals_lst -> . literal literals_lst
+    (59) literals_lst -> . literal
+    (60) literals_lst -> . or_literal literals_lst
+    (61) literals_lst -> . or_literal
+    (62) literals_lst -> . and_literal literals_lst
+    (63) literals_lst -> . and_literal
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (66) or_literal -> . LPAREN OR_KEY literals_lst RPAREN
+    (67) or_literal -> . literal
+    (64) and_literal -> . LPAREN AND_KEY literals_lst RPAREN
+    (65) and_literal -> . literal
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 137
+
+    literals_lst                   shift and go to state 193
+    literal                        shift and go to state 139
+    or_literal                     shift and go to state 140
+    and_literal                    shift and go to state 141
+    predicate                      shift and go to state 103
+
+state 167
+
+    (99) goal_def -> LPAREN GOAL_KEY LPAREN AND_KEY literals_lst RPAREN . RPAREN
+
+    RPAREN          shift and go to state 194
+
+
+state 168
+
+    (58) literals_lst -> literal literals_lst .
+
+    RPAREN          reduce using rule 58 (literals_lst -> literal literals_lst .)
+
+
+state 169
+
+    (60) literals_lst -> or_literal literals_lst .
+
+    RPAREN          reduce using rule 60 (literals_lst -> or_literal literals_lst .)
+
+
+state 170
+
+    (62) literals_lst -> and_literal literals_lst .
+
+    RPAREN          reduce using rule 62 (literals_lst -> and_literal literals_lst .)
+
+
+state 171
+
+    (37) effect_body -> LPAREN NAME . unlabeled_effect RPAREN
+    (72) predicate -> LPAREN NAME . variables_lst RPAREN
+    (74) predicate -> LPAREN NAME . RPAREN
+    (75) predicate -> LPAREN NAME . constants_lst RPAREN
+    (40) unlabeled_effect -> . LPAREN ONEOF_KEY effect_body RPAREN
+    (41) unlabeled_effect -> . deterministic_effect unlabeled_effect
+    (42) unlabeled_effect -> . deterministic_effect
+    (84) variables_lst -> . variable variables_lst
+    (85) variables_lst -> . variable
+    (82) constants_lst -> . constant constants_lst
+    (83) constants_lst -> . constant
+    (43) deterministic_effect -> . LPAREN AND_KEY effects_lst RPAREN
+    (44) deterministic_effect -> . effects_lst
+    (90) variable -> . VARIABLE
+    (89) constant -> . NAME
+    (50) effects_lst -> . effect effects_lst
+    (51) effects_lst -> . effect
+    (54) effect -> . literal
+    (55) effect -> . LPAREN PROBABILISTIC_KEY PROBABILITY literal RPAREN
+    (56) effect -> . LPAREN WHEN_KEY when_effects RPAREN
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    RPAREN          shift and go to state 152
+    LPAREN          shift and go to state 179
+    VARIABLE        shift and go to state 110
+    NAME            shift and go to state 73
+
+    unlabeled_effect               shift and go to state 195
+    variables_lst                  shift and go to state 151
+    constants_lst                  shift and go to state 153
+    deterministic_effect           shift and go to state 145
+    variable                       shift and go to state 109
+    constant                       shift and go to state 72
+    effects_lst                    shift and go to state 146
+    effect                         shift and go to state 147
+    literal                        shift and go to state 148
+    predicate                      shift and go to state 103
+
+state 172
+
+    (40) unlabeled_effect -> LPAREN ONEOF_KEY . effect_body RPAREN
+    (37) effect_body -> . LPAREN NAME unlabeled_effect RPAREN
+    (38) effect_body -> . effect_body LPAREN NAME unlabeled_effect RPAREN
+    (39) effect_body -> . unlabeled_effect
+    (40) unlabeled_effect -> . LPAREN ONEOF_KEY effect_body RPAREN
+    (41) unlabeled_effect -> . deterministic_effect unlabeled_effect
+    (42) unlabeled_effect -> . deterministic_effect
+    (43) deterministic_effect -> . LPAREN AND_KEY effects_lst RPAREN
+    (44) deterministic_effect -> . effects_lst
+    (50) effects_lst -> . effect effects_lst
+    (51) effects_lst -> . effect
+    (54) effect -> . literal
+    (55) effect -> . LPAREN PROBABILISTIC_KEY PROBABILITY literal RPAREN
+    (56) effect -> . LPAREN WHEN_KEY when_effects RPAREN
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 142
+
+    effect_body                    shift and go to state 196
+    unlabeled_effect               shift and go to state 144
+    deterministic_effect           shift and go to state 145
+    effects_lst                    shift and go to state 146
+    effect                         shift and go to state 147
+    literal                        shift and go to state 148
+    predicate                      shift and go to state 103
+
+state 173
+
+    (43) deterministic_effect -> LPAREN AND_KEY . effects_lst RPAREN
+    (50) effects_lst -> . effect effects_lst
+    (51) effects_lst -> . effect
+    (54) effect -> . literal
+    (55) effect -> . LPAREN PROBABILISTIC_KEY PROBABILITY literal RPAREN
+    (56) effect -> . LPAREN WHEN_KEY when_effects RPAREN
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 181
+
+    effects_lst                    shift and go to state 197
+    effect                         shift and go to state 147
+    literal                        shift and go to state 148
+    predicate                      shift and go to state 103
+
+state 174
+
+    (55) effect -> LPAREN PROBABILISTIC_KEY . PROBABILITY literal RPAREN
+
+    PROBABILITY     shift and go to state 198
+
+
+state 175
+
+    (56) effect -> LPAREN WHEN_KEY . when_effects RPAREN
+    (45) when_effects -> . when_if when_then
+    (46) when_if -> . simple_effect
+    (47) when_if -> . LPAREN AND_KEY simple_effects_lst RPAREN
+    (57) simple_effect -> . literal
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 199
+
+    when_effects                   shift and go to state 200
+    when_if                        shift and go to state 201
+    simple_effect                  shift and go to state 202
+    literal                        shift and go to state 203
+    predicate                      shift and go to state 103
+
+state 176
+
+    (38) effect_body -> effect_body LPAREN . NAME unlabeled_effect RPAREN
+
+    NAME            shift and go to state 204
+
+
+state 177
+
+    (101) goal_def -> LPAREN GOAL_KEY LPAREN ONEOF_KEY effect_body RPAREN . RPAREN
+
+    RPAREN          shift and go to state 205
+
+
+state 178
+
+    (41) unlabeled_effect -> deterministic_effect unlabeled_effect .
+
+    RPAREN          reduce using rule 41 (unlabeled_effect -> deterministic_effect unlabeled_effect .)
+    LPAREN          reduce using rule 41 (unlabeled_effect -> deterministic_effect unlabeled_effect .)
+
+
+state 179
+
+    (40) unlabeled_effect -> LPAREN . ONEOF_KEY effect_body RPAREN
+    (43) deterministic_effect -> LPAREN . AND_KEY effects_lst RPAREN
+    (55) effect -> LPAREN . PROBABILISTIC_KEY PROBABILITY literal RPAREN
+    (56) effect -> LPAREN . WHEN_KEY when_effects RPAREN
+    (68) literal -> LPAREN . NOT_KEY predicate RPAREN
+    (72) predicate -> LPAREN . NAME variables_lst RPAREN
+    (73) predicate -> LPAREN . EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> LPAREN . NAME RPAREN
+    (75) predicate -> LPAREN . NAME constants_lst RPAREN
+
+    ONEOF_KEY       shift and go to state 172
+    AND_KEY         shift and go to state 173
+    PROBABILISTIC_KEY shift and go to state 174
+    WHEN_KEY        shift and go to state 175
+    NOT_KEY         shift and go to state 120
+    NAME            shift and go to state 121
+    EQUALS          shift and go to state 122
+
+
+state 180
+
+    (50) effects_lst -> effect effects_lst .
+
+    LPAREN          reduce using rule 50 (effects_lst -> effect effects_lst .)
+    RPAREN          reduce using rule 50 (effects_lst -> effect effects_lst .)
+
+
+state 181
+
+    (55) effect -> LPAREN . PROBABILISTIC_KEY PROBABILITY literal RPAREN
+    (56) effect -> LPAREN . WHEN_KEY when_effects RPAREN
+    (68) literal -> LPAREN . NOT_KEY predicate RPAREN
+    (72) predicate -> LPAREN . NAME variables_lst RPAREN
+    (73) predicate -> LPAREN . EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> LPAREN . NAME RPAREN
+    (75) predicate -> LPAREN . NAME constants_lst RPAREN
+
+    PROBABILISTIC_KEY shift and go to state 174
+    WHEN_KEY        shift and go to state 175
+    NOT_KEY         shift and go to state 120
+    NAME            shift and go to state 121
+    EQUALS          shift and go to state 122
+
+
+state 182
+
+    (68) literal -> LPAREN NOT_KEY predicate RPAREN .
+
+    RPAREN          reduce using rule 68 (literal -> LPAREN NOT_KEY predicate RPAREN .)
+    LPAREN          reduce using rule 68 (literal -> LPAREN NOT_KEY predicate RPAREN .)
+    EFFECT_KEY      reduce using rule 68 (literal -> LPAREN NOT_KEY predicate RPAREN .)
+
+
+state 183
+
+    (72) predicate -> LPAREN NAME variables_lst RPAREN .
+
+    RPAREN          reduce using rule 72 (predicate -> LPAREN NAME variables_lst RPAREN .)
+    LPAREN          reduce using rule 72 (predicate -> LPAREN NAME variables_lst RPAREN .)
+    EFFECT_KEY      reduce using rule 72 (predicate -> LPAREN NAME variables_lst RPAREN .)
+
+
+state 184
+
+    (75) predicate -> LPAREN NAME constants_lst RPAREN .
+
+    RPAREN          reduce using rule 75 (predicate -> LPAREN NAME constants_lst RPAREN .)
+    LPAREN          reduce using rule 75 (predicate -> LPAREN NAME constants_lst RPAREN .)
+    EFFECT_KEY      reduce using rule 75 (predicate -> LPAREN NAME constants_lst RPAREN .)
+
+
+state 185
+
+    (73) predicate -> LPAREN EQUALS VARIABLE VARIABLE . RPAREN
+
+    RPAREN          shift and go to state 206
+
+
+state 186
+
+    (80) typed_variables_lst -> variables_lst . HYPHEN type typed_variables_lst
+    (81) typed_variables_lst -> variables_lst . HYPHEN type
+
+    HYPHEN          shift and go to state 127
+
+
+state 187
+
+    (80) typed_variables_lst -> variables_lst HYPHEN type typed_variables_lst .
+
+    RPAREN          reduce using rule 80 (typed_variables_lst -> variables_lst HYPHEN type typed_variables_lst .)
+
+
+state 188
+
+    (36) effects_def -> EFFECT_KEY effect_body .
+    (38) effect_body -> effect_body . LPAREN NAME unlabeled_effect RPAREN
+
+    RPAREN          reduce using rule 36 (effects_def -> EFFECT_KEY effect_body .)
+    LPAREN          shift and go to state 176
+
+
+state 189
+
+    (34) precond_def -> PRECONDITION_KEY LPAREN AND_KEY . literals_lst RPAREN
+    (58) literals_lst -> . literal literals_lst
+    (59) literals_lst -> . literal
+    (60) literals_lst -> . or_literal literals_lst
+    (61) literals_lst -> . or_literal
+    (62) literals_lst -> . and_literal literals_lst
+    (63) literals_lst -> . and_literal
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (66) or_literal -> . LPAREN OR_KEY literals_lst RPAREN
+    (67) or_literal -> . literal
+    (64) and_literal -> . LPAREN AND_KEY literals_lst RPAREN
+    (65) and_literal -> . literal
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 137
+
+    literals_lst                   shift and go to state 207
+    literal                        shift and go to state 139
+    or_literal                     shift and go to state 140
+    and_literal                    shift and go to state 141
+    predicate                      shift and go to state 103
+
+state 190
+
+    (30) parameters_def -> PARAMETERS_KEY LPAREN typed_variables_lst RPAREN .
+
+    PRECONDITION_KEY reduce using rule 30 (parameters_def -> PARAMETERS_KEY LPAREN typed_variables_lst RPAREN .)
+
+
+state 191
+
+    (31) parameters_def -> PARAMETERS_KEY LPAREN variables_lst RPAREN .
+
+    PRECONDITION_KEY reduce using rule 31 (parameters_def -> PARAMETERS_KEY LPAREN variables_lst RPAREN .)
+
+
+state 192
+
+    (66) or_literal -> LPAREN OR_KEY literals_lst . RPAREN
+
+    RPAREN          shift and go to state 208
+
+
+state 193
+
+    (64) and_literal -> LPAREN AND_KEY literals_lst . RPAREN
+
+    RPAREN          shift and go to state 209
+
+
+state 194
+
+    (99) goal_def -> LPAREN GOAL_KEY LPAREN AND_KEY literals_lst RPAREN RPAREN .
+
+    RPAREN          reduce using rule 99 (goal_def -> LPAREN GOAL_KEY LPAREN AND_KEY literals_lst RPAREN RPAREN .)
+
+
+state 195
+
+    (37) effect_body -> LPAREN NAME unlabeled_effect . RPAREN
+
+    RPAREN          shift and go to state 210
+
+
+state 196
+
+    (40) unlabeled_effect -> LPAREN ONEOF_KEY effect_body . RPAREN
+    (38) effect_body -> effect_body . LPAREN NAME unlabeled_effect RPAREN
+
+    RPAREN          shift and go to state 211
+    LPAREN          shift and go to state 176
+
+
+state 197
+
+    (43) deterministic_effect -> LPAREN AND_KEY effects_lst . RPAREN
+
+    RPAREN          shift and go to state 212
+
+
+state 198
+
+    (55) effect -> LPAREN PROBABILISTIC_KEY PROBABILITY . literal RPAREN
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 213
+
+    literal                        shift and go to state 214
+    predicate                      shift and go to state 103
+
+state 199
+
+    (47) when_if -> LPAREN . AND_KEY simple_effects_lst RPAREN
+    (68) literal -> LPAREN . NOT_KEY predicate RPAREN
+    (72) predicate -> LPAREN . NAME variables_lst RPAREN
+    (73) predicate -> LPAREN . EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> LPAREN . NAME RPAREN
+    (75) predicate -> LPAREN . NAME constants_lst RPAREN
+
+    AND_KEY         shift and go to state 215
+    NOT_KEY         shift and go to state 120
+    NAME            shift and go to state 121
+    EQUALS          shift and go to state 122
+
+
+state 200
+
+    (56) effect -> LPAREN WHEN_KEY when_effects . RPAREN
+
+    RPAREN          shift and go to state 216
+
+
+state 201
+
+    (45) when_effects -> when_if . when_then
+    (48) when_then -> . simple_effect
+    (49) when_then -> . LPAREN AND_KEY simple_effects_lst RPAREN
+    (57) simple_effect -> . literal
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 219
+
+    when_then                      shift and go to state 217
+    simple_effect                  shift and go to state 218
+    literal                        shift and go to state 203
+    predicate                      shift and go to state 103
+
+state 202
+
+    (46) when_if -> simple_effect .
+
+    LPAREN          reduce using rule 46 (when_if -> simple_effect .)
+
+
+state 203
+
+    (57) simple_effect -> literal .
+
+    LPAREN          reduce using rule 57 (simple_effect -> literal .)
+    RPAREN          reduce using rule 57 (simple_effect -> literal .)
+
+
+state 204
+
+    (38) effect_body -> effect_body LPAREN NAME . unlabeled_effect RPAREN
+    (40) unlabeled_effect -> . LPAREN ONEOF_KEY effect_body RPAREN
+    (41) unlabeled_effect -> . deterministic_effect unlabeled_effect
+    (42) unlabeled_effect -> . deterministic_effect
+    (43) deterministic_effect -> . LPAREN AND_KEY effects_lst RPAREN
+    (44) deterministic_effect -> . effects_lst
+    (50) effects_lst -> . effect effects_lst
+    (51) effects_lst -> . effect
+    (54) effect -> . literal
+    (55) effect -> . LPAREN PROBABILISTIC_KEY PROBABILITY literal RPAREN
+    (56) effect -> . LPAREN WHEN_KEY when_effects RPAREN
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 179
+
+    unlabeled_effect               shift and go to state 220
+    deterministic_effect           shift and go to state 145
+    effects_lst                    shift and go to state 146
+    effect                         shift and go to state 147
+    literal                        shift and go to state 148
+    predicate                      shift and go to state 103
+
+state 205
+
+    (101) goal_def -> LPAREN GOAL_KEY LPAREN ONEOF_KEY effect_body RPAREN RPAREN .
+
+    RPAREN          reduce using rule 101 (goal_def -> LPAREN GOAL_KEY LPAREN ONEOF_KEY effect_body RPAREN RPAREN .)
+
+
+state 206
+
+    (73) predicate -> LPAREN EQUALS VARIABLE VARIABLE RPAREN .
+
+    RPAREN          reduce using rule 73 (predicate -> LPAREN EQUALS VARIABLE VARIABLE RPAREN .)
+    LPAREN          reduce using rule 73 (predicate -> LPAREN EQUALS VARIABLE VARIABLE RPAREN .)
+    EFFECT_KEY      reduce using rule 73 (predicate -> LPAREN EQUALS VARIABLE VARIABLE RPAREN .)
+
+
+state 207
+
+    (34) precond_def -> PRECONDITION_KEY LPAREN AND_KEY literals_lst . RPAREN
+
+    RPAREN          shift and go to state 221
+
+
+state 208
+
+    (66) or_literal -> LPAREN OR_KEY literals_lst RPAREN .
+
+    LPAREN          reduce using rule 66 (or_literal -> LPAREN OR_KEY literals_lst RPAREN .)
+    RPAREN          reduce using rule 66 (or_literal -> LPAREN OR_KEY literals_lst RPAREN .)
+
+
+state 209
+
+    (64) and_literal -> LPAREN AND_KEY literals_lst RPAREN .
+
+    LPAREN          reduce using rule 64 (and_literal -> LPAREN AND_KEY literals_lst RPAREN .)
+    RPAREN          reduce using rule 64 (and_literal -> LPAREN AND_KEY literals_lst RPAREN .)
+
+
+state 210
+
+    (37) effect_body -> LPAREN NAME unlabeled_effect RPAREN .
+
+    RPAREN          reduce using rule 37 (effect_body -> LPAREN NAME unlabeled_effect RPAREN .)
+    LPAREN          reduce using rule 37 (effect_body -> LPAREN NAME unlabeled_effect RPAREN .)
+
+
+state 211
+
+    (40) unlabeled_effect -> LPAREN ONEOF_KEY effect_body RPAREN .
+
+    RPAREN          reduce using rule 40 (unlabeled_effect -> LPAREN ONEOF_KEY effect_body RPAREN .)
+    LPAREN          reduce using rule 40 (unlabeled_effect -> LPAREN ONEOF_KEY effect_body RPAREN .)
+
+
+state 212
+
+    (43) deterministic_effect -> LPAREN AND_KEY effects_lst RPAREN .
+
+    LPAREN          reduce using rule 43 (deterministic_effect -> LPAREN AND_KEY effects_lst RPAREN .)
+    RPAREN          reduce using rule 43 (deterministic_effect -> LPAREN AND_KEY effects_lst RPAREN .)
+
+
+state 213
+
+    (68) literal -> LPAREN . NOT_KEY predicate RPAREN
+    (72) predicate -> LPAREN . NAME variables_lst RPAREN
+    (73) predicate -> LPAREN . EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> LPAREN . NAME RPAREN
+    (75) predicate -> LPAREN . NAME constants_lst RPAREN
+
+    NOT_KEY         shift and go to state 120
+    NAME            shift and go to state 121
+    EQUALS          shift and go to state 122
+
+
+state 214
+
+    (55) effect -> LPAREN PROBABILISTIC_KEY PROBABILITY literal . RPAREN
+
+    RPAREN          shift and go to state 222
+
+
+state 215
+
+    (47) when_if -> LPAREN AND_KEY . simple_effects_lst RPAREN
+    (52) simple_effects_lst -> . simple_effect simple_effects_lst
+    (53) simple_effects_lst -> . simple_effect
+    (57) simple_effect -> . literal
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 213
+
+    simple_effects_lst             shift and go to state 223
+    simple_effect                  shift and go to state 224
+    literal                        shift and go to state 203
+    predicate                      shift and go to state 103
+
+state 216
+
+    (56) effect -> LPAREN WHEN_KEY when_effects RPAREN .
+
+    LPAREN          reduce using rule 56 (effect -> LPAREN WHEN_KEY when_effects RPAREN .)
+    RPAREN          reduce using rule 56 (effect -> LPAREN WHEN_KEY when_effects RPAREN .)
+
+
+state 217
+
+    (45) when_effects -> when_if when_then .
+
+    RPAREN          reduce using rule 45 (when_effects -> when_if when_then .)
+
+
+state 218
+
+    (48) when_then -> simple_effect .
+
+    RPAREN          reduce using rule 48 (when_then -> simple_effect .)
+
+
+state 219
+
+    (49) when_then -> LPAREN . AND_KEY simple_effects_lst RPAREN
+    (68) literal -> LPAREN . NOT_KEY predicate RPAREN
+    (72) predicate -> LPAREN . NAME variables_lst RPAREN
+    (73) predicate -> LPAREN . EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> LPAREN . NAME RPAREN
+    (75) predicate -> LPAREN . NAME constants_lst RPAREN
+
+    AND_KEY         shift and go to state 225
+    NOT_KEY         shift and go to state 120
+    NAME            shift and go to state 121
+    EQUALS          shift and go to state 122
+
+
+state 220
+
+    (38) effect_body -> effect_body LPAREN NAME unlabeled_effect . RPAREN
+
+    RPAREN          shift and go to state 226
+
+
+state 221
+
+    (34) precond_def -> PRECONDITION_KEY LPAREN AND_KEY literals_lst RPAREN .
+
+    EFFECT_KEY      reduce using rule 34 (precond_def -> PRECONDITION_KEY LPAREN AND_KEY literals_lst RPAREN .)
+
+
+state 222
+
+    (55) effect -> LPAREN PROBABILISTIC_KEY PROBABILITY literal RPAREN .
+
+    LPAREN          reduce using rule 55 (effect -> LPAREN PROBABILISTIC_KEY PROBABILITY literal RPAREN .)
+    RPAREN          reduce using rule 55 (effect -> LPAREN PROBABILISTIC_KEY PROBABILITY literal RPAREN .)
+
+
+state 223
+
+    (47) when_if -> LPAREN AND_KEY simple_effects_lst . RPAREN
+
+    RPAREN          shift and go to state 227
+
+
+state 224
+
+    (52) simple_effects_lst -> simple_effect . simple_effects_lst
+    (53) simple_effects_lst -> simple_effect .
+    (52) simple_effects_lst -> . simple_effect simple_effects_lst
+    (53) simple_effects_lst -> . simple_effect
+    (57) simple_effect -> . literal
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    RPAREN          reduce using rule 53 (simple_effects_lst -> simple_effect .)
+    LPAREN          shift and go to state 213
+
+    simple_effect                  shift and go to state 224
+    simple_effects_lst             shift and go to state 228
+    literal                        shift and go to state 203
+    predicate                      shift and go to state 103
+
+state 225
+
+    (49) when_then -> LPAREN AND_KEY . simple_effects_lst RPAREN
+    (52) simple_effects_lst -> . simple_effect simple_effects_lst
+    (53) simple_effects_lst -> . simple_effect
+    (57) simple_effect -> . literal
+    (68) literal -> . LPAREN NOT_KEY predicate RPAREN
+    (69) literal -> . predicate
+    (72) predicate -> . LPAREN NAME variables_lst RPAREN
+    (73) predicate -> . LPAREN EQUALS VARIABLE VARIABLE RPAREN
+    (74) predicate -> . LPAREN NAME RPAREN
+    (75) predicate -> . LPAREN NAME constants_lst RPAREN
+
+    LPAREN          shift and go to state 213
+
+    simple_effects_lst             shift and go to state 229
+    simple_effect                  shift and go to state 224
+    literal                        shift and go to state 203
+    predicate                      shift and go to state 103
+
+state 226
+
+    (38) effect_body -> effect_body LPAREN NAME unlabeled_effect RPAREN .
+
+    RPAREN          reduce using rule 38 (effect_body -> effect_body LPAREN NAME unlabeled_effect RPAREN .)
+    LPAREN          reduce using rule 38 (effect_body -> effect_body LPAREN NAME unlabeled_effect RPAREN .)
+
+
+state 227
+
+    (47) when_if -> LPAREN AND_KEY simple_effects_lst RPAREN .
+
+    LPAREN          reduce using rule 47 (when_if -> LPAREN AND_KEY simple_effects_lst RPAREN .)
+
+
+state 228
+
+    (52) simple_effects_lst -> simple_effect simple_effects_lst .
+
+    RPAREN          reduce using rule 52 (simple_effects_lst -> simple_effect simple_effects_lst .)
+
+
+state 229
+
+    (49) when_then -> LPAREN AND_KEY simple_effects_lst . RPAREN
+
+    RPAREN          shift and go to state 230
+
+
+state 230
+
+    (49) when_then -> LPAREN AND_KEY simple_effects_lst RPAREN .
+
+    RPAREN          reduce using rule 49 (when_then -> LPAREN AND_KEY simple_effects_lst RPAREN .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for LPAREN in state 139 resolved as shift
+WARNING: shift/reduce conflict for LPAREN in state 145 resolved as shift
+WARNING: shift/reduce conflict for LPAREN in state 147 resolved as shift
+WARNING: reduce/reduce conflict in state 139 resolved using rule (literals_lst -> literal)
+WARNING: rejected rule (or_literal -> literal) in state 139
+WARNING: reduce/reduce conflict in state 139 resolved using rule (and_literal -> literal)
+WARNING: rejected rule (or_literal -> literal) in state 139
+WARNING: reduce/reduce conflict in state 139 resolved using rule (literals_lst -> literal)
+WARNING: rejected rule (and_literal -> literal) in state 139
+WARNING: Rule (or_literal -> literal) is never reduced
+WARNING: Rule (and_literal -> literal) is never reduced
