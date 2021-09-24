@@ -1,4 +1,4 @@
-# Excellence_path
+# Excellence Path a.a.2020/2021
 This repository contains my  code of work realized for the Excellence Path, during the a.a.2020/2021 at Sapienza, University od Rome.
 I have built a new multi-tier domain (**gripper**) according to the theoretical framework described in the paper [Multi-Tier Automated Planning for Adaptive Behavior](https://arxiv.org/abs/2002.12445).
 
