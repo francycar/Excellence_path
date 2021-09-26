@@ -10,7 +10,7 @@
 		(ball b2)
 		(free g)
 		(gripper g)
-		(q1 r2)
+		(q1 b1 r2)
 		(room r1)
 		(room r2)
 		(turndomain)
