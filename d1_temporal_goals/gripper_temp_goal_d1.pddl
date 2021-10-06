@@ -1,7 +1,7 @@
 (define (domain gripper)
 	(:requirements :typing :strips :non-deterministic)
 	(:types location gripper object)
-	(:predicates (atrob ?loc - location) (spare-in ?loc - location) (adj ?from - location ?to - location) (room ?r - location) (ball ?o - object) (gripper ?gr - gripper) (at ?o - object ?r - location) (free ?gr - gripper) (carry ?o - object ?gr - gripper) (scratch) (turnDomain) (q1 ?loc68 - location ?o87 - object) (q2 ?loc68 - location ?o87 - object))
+	(:predicates (atrob ?loc - location) (spare-in ?loc - location) (adj ?from - location ?to - location) (room ?r - location) (ball ?o - object) (gripper ?gr - gripper) (at ?o - object ?r - location) (free ?gr - gripper) (carry ?o - object ?gr - gripper) (scratch) (turnDomain) (q2 ?loc96 - location ?gr92 - gripper ?loc14 - location) (q1 ?loc96 - location ?gr92 - gripper ?loc14 - location) (q3 ?loc96 - location ?gr92 - gripper ?loc14 - location) (q4 ?loc96 - location ?gr92 - gripper ?loc14 - location))
 	(:action move
 		:parameters (?from - location ?to - location)
 		:precondition (and (atrob ?from) (adj ?from ?to) (room ?from) (turnDomain))
@@ -18,13 +18,23 @@
 		:effect (and (at ?b ?r) (not (free ?g)) (carry ?b ?g) (not (turnDomain)))
 	)
 	(:action trans-0
-		:parameters (?loc68 - location ?o87 - object)
-		:precondition (and (or (and (q1 ?loc68 ?o87) (not (atrob ?loc68))) (and (q1 ?loc68 ?o87) (atrob ?loc68) (at ?o87 ?loc68)) (and (q2 ?loc68 ?o87) (at ?o87 ?loc68))) (not (turnDomain)))
-		:effect (and (q1 ?loc68 ?o87) (not (q2 ?loc68 ?o87)) (turnDomain))
+		:parameters (?loc96 - location ?gr92 - gripper ?loc14 - location)
+		:precondition (and (or (and (q1 ?loc96 ?gr92 ?loc14) (not (atrob ?loc96)) (free ?gr92) (not (atrob ?loc14))) (and (q1 ?loc96 ?gr92 ?loc14) (not (atrob ?loc96)) (free ?gr92) (atrob ?loc14) (not (scratch))) (and (q2 ?loc96 ?gr92 ?loc14) (not (atrob ?loc96)) (not (atrob ?loc14))) (and (q2 ?loc96 ?gr92 ?loc14) (not (atrob ?loc96)) (atrob ?loc14) (not (scratch)))) (not (turnDomain)))
+		:effect (and (q2 ?loc96 ?gr92 ?loc14) (not (q1 ?loc96 ?gr92 ?loc14)) (not (q3 ?loc96 ?gr92 ?loc14)) (not (q4 ?loc96 ?gr92 ?loc14)) (turnDomain))
 	)
 	(:action trans-1
-		:parameters (?loc68 - location ?o87 - object)
-		:precondition (and (or (and (q1 ?loc68 ?o87) (atrob ?loc68) (not (at ?o87 ?loc68))) (and (q2 ?loc68 ?o87) (not (at ?o87 ?loc68)))) (not (turnDomain)))
-		:effect (and (q2 ?loc68 ?o87) (not (q1 ?loc68 ?o87)) (turnDomain))
+		:parameters (?loc96 - location ?gr92 - gripper ?loc14 - location)
+		:precondition (and (or (and (q1 ?loc96 ?gr92 ?loc14) (not (atrob ?loc96)) (not (free ?gr92))) (and (q1 ?loc96 ?gr92 ?loc14) (not (atrob ?loc96)) (free ?gr92) (atrob ?loc14) (scratch)) (and (q2 ?loc96 ?gr92 ?loc14) (not (atrob ?loc96)) (atrob ?loc14) (scratch))) (not (turnDomain)))
+		:effect (and (q1 ?loc96 ?gr92 ?loc14) (not (q2 ?loc96 ?gr92 ?loc14)) (not (q3 ?loc96 ?gr92 ?loc14)) (not (q4 ?loc96 ?gr92 ?loc14)) (turnDomain))
+	)
+	(:action trans-2
+		:parameters (?loc96 - location ?gr92 - gripper ?loc14 - location)
+		:precondition (and (or (and (q1 ?loc96 ?gr92 ?loc14) (atrob ?loc96) (not (free ?gr92))) (and (q1 ?loc96 ?gr92 ?loc14) (atrob ?loc96) (free ?gr92) (atrob ?loc14) (scratch)) (and (q2 ?loc96 ?gr92 ?loc14) (atrob ?loc96) (atrob ?loc14) (scratch)) (and (q3 ?loc96 ?gr92 ?loc14) (not (free ?gr92))) (and (q3 ?loc96 ?gr92 ?loc14) (free ?gr92) (atrob ?loc14) (scratch)) (and (q4 ?loc96 ?gr92 ?loc14) (atrob ?loc14) (scratch))) (not (turnDomain)))
+		:effect (and (q3 ?loc96 ?gr92 ?loc14) (not (q2 ?loc96 ?gr92 ?loc14)) (not (q1 ?loc96 ?gr92 ?loc14)) (not (q4 ?loc96 ?gr92 ?loc14)) (turnDomain))
+	)
+	(:action trans-3
+		:parameters (?loc96 - location ?gr92 - gripper ?loc14 - location)
+		:precondition (and (or (and (q1 ?loc96 ?gr92 ?loc14) (atrob ?loc96) (free ?gr92) (not (atrob ?loc14))) (and (q1 ?loc96 ?gr92 ?loc14) (atrob ?loc96) (free ?gr92) (atrob ?loc14) (not (scratch))) (and (q2 ?loc96 ?gr92 ?loc14) (atrob ?loc96) (not (atrob ?loc14))) (and (q2 ?loc96 ?gr92 ?loc14) (atrob ?loc96) (atrob ?loc14) (not (scratch))) (and (q3 ?loc96 ?gr92 ?loc14) (free ?gr92) (not (atrob ?loc14))) (and (q3 ?loc96 ?gr92 ?loc14) (free ?gr92) (atrob ?loc14) (not (scratch))) (and (q4 ?loc96 ?gr92 ?loc14) (not (atrob ?loc14))) (and (q4 ?loc96 ?gr92 ?loc14) (atrob ?loc14) (not (scratch)))) (not (turnDomain)))
+		:effect (and (q4 ?loc96 ?gr92 ?loc14) (not (q2 ?loc96 ?gr92 ?loc14)) (not (q1 ?loc96 ?gr92 ?loc14)) (not (q3 ?loc96 ?gr92 ?loc14)) (turnDomain))
 	)
 )

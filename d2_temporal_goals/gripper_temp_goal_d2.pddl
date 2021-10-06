@@ -1,7 +1,7 @@
 (define (domain gripper)
 	(:requirements :typing :strips :non-deterministic)
 	(:types location gripper object)
-	(:predicates (atrob ?loc - location) (spare-in ?loc - location) (adj ?from - location ?to - location) (room ?r - location) (ball ?o - object) (gripper ?gr - gripper) (at ?o - object ?r - location) (free ?gr - gripper) (carry ?o - object ?gr - gripper) (scratch) (turnDomain) (q1 ?o14 - object ?r79 - location) (q2 ?o14 - object ?r79 - location))
+	(:predicates (atrob ?loc - location) (spare-in ?loc - location) (adj ?from - location ?to - location) (room ?r - location) (ball ?o - object) (gripper ?gr - gripper) (at ?o - object ?r - location) (free ?gr - gripper) (carry ?o - object ?gr - gripper) (scratch) (turnDomain) (q1 ?o27 - object ?r42 - location ?loc27 - location ?gr50 - gripper) (q4 ?o27 - object ?r42 - location ?loc27 - location ?gr50 - gripper) (q2 ?o27 - object ?r42 - location ?loc27 - location ?gr50 - gripper) (q3 ?o27 - object ?r42 - location ?loc27 - location ?gr50 - gripper))
 	(:action move
 		:parameters (?from - location ?to - location)
 		:precondition (and (atrob ?from) (adj ?from ?to) (room ?from) (turnDomain))
@@ -18,13 +18,23 @@
 		:effect (and (at ?b ?r) (free ?g) (not (carry ?b ?g)) (not (turnDomain)))
 	)
 	(:action trans-0
-		:parameters (?o14 - object ?r79 - location)
-		:precondition (and (or (and (q1 ?o14 ?r79) (not (at ?o14 ?r79)) (not (atrob ?r79))) (and (q1 ?o14 ?r79) (at ?o14 ?r79) (atrob ?r79)) (and (q2 ?o14 ?r79) (at ?o14 ?r79) (atrob ?r79))) (not (turnDomain)))
-		:effect (and (q1 ?o14 ?r79) (not (q2 ?o14 ?r79)) (turnDomain))
+		:parameters (?o27 - object ?r42 - location ?loc27 - location ?gr50 - gripper)
+		:precondition (and (or (and (q1 ?o27 ?r42 ?loc27 ?gr50) (not (at ?o27 ?r42)) (not (atrob ?loc27))) (and (q1 ?o27 ?r42 ?loc27 ?gr50) (not (at ?o27 ?r42)) (atrob ?loc27) (atrob ?r42) (carry ?o27 ?gr50)) (and (q2 ?o27 ?r42 ?loc27 ?gr50) (not (at ?o27 ?r42)) (atrob ?r42) (carry ?o27 ?gr50))) (not (turnDomain)))
+		:effect (and (q1 ?o27 ?r42 ?loc27 ?gr50) (not (q4 ?o27 ?r42 ?loc27 ?gr50)) (not (q2 ?o27 ?r42 ?loc27 ?gr50)) (not (q3 ?o27 ?r42 ?loc27 ?gr50)) (turnDomain))
 	)
 	(:action trans-1
-		:parameters (?o14 - object ?r79 - location)
-		:precondition (and (or (and (q1 ?o14 ?r79) (not (at ?o14 ?r79)) (atrob ?r79)) (and (q1 ?o14 ?r79) (at ?o14 ?r79) (not (atrob ?r79))) (and (q2 ?o14 ?r79) (not (at ?o14 ?r79))) (and (q2 ?o14 ?r79) (at ?o14 ?r79) (not (atrob ?r79)))) (not (turnDomain)))
-		:effect (and (q2 ?o14 ?r79) (not (q1 ?o14 ?r79)) (turnDomain))
+		:parameters (?o27 - object ?r42 - location ?loc27 - location ?gr50 - gripper)
+		:precondition (and (or (and (q1 ?o27 ?r42 ?loc27 ?gr50) (at ?o27 ?r42) (atrob ?loc27) (not (atrob ?r42))) (and (q1 ?o27 ?r42 ?loc27 ?gr50) (at ?o27 ?r42) (atrob ?loc27) (atrob ?r42) (not (carry ?o27 ?gr50))) (and (q2 ?o27 ?r42 ?loc27 ?gr50) (at ?o27 ?r42) (not (atrob ?r42))) (and (q2 ?o27 ?r42 ?loc27 ?gr50) (at ?o27 ?r42) (atrob ?r42) (not (carry ?o27 ?gr50))) (and (q3 ?o27 ?r42 ?loc27 ?gr50) (atrob ?loc27) (not (atrob ?r42))) (and (q3 ?o27 ?r42 ?loc27 ?gr50) (atrob ?loc27) (atrob ?r42) (not (carry ?o27 ?gr50))) (and (q4 ?o27 ?r42 ?loc27 ?gr50) (not (atrob ?r42))) (and (q4 ?o27 ?r42 ?loc27 ?gr50) (atrob ?r42) (not (carry ?o27 ?gr50)))) (not (turnDomain)))
+		:effect (and (q4 ?o27 ?r42 ?loc27 ?gr50) (not (q1 ?o27 ?r42 ?loc27 ?gr50)) (not (q2 ?o27 ?r42 ?loc27 ?gr50)) (not (q3 ?o27 ?r42 ?loc27 ?gr50)) (turnDomain))
+	)
+	(:action trans-2
+		:parameters (?o27 - object ?r42 - location ?loc27 - location ?gr50 - gripper)
+		:precondition (and (or (and (q1 ?o27 ?r42 ?loc27 ?gr50) (not (at ?o27 ?r42)) (atrob ?loc27) (not (atrob ?r42))) (and (q1 ?o27 ?r42 ?loc27 ?gr50) (not (at ?o27 ?r42)) (atrob ?loc27) (atrob ?r42) (not (carry ?o27 ?gr50))) (and (q2 ?o27 ?r42 ?loc27 ?gr50) (not (at ?o27 ?r42)) (not (atrob ?r42))) (and (q2 ?o27 ?r42 ?loc27 ?gr50) (not (at ?o27 ?r42)) (atrob ?r42) (not (carry ?o27 ?gr50)))) (not (turnDomain)))
+		:effect (and (q2 ?o27 ?r42 ?loc27 ?gr50) (not (q1 ?o27 ?r42 ?loc27 ?gr50)) (not (q4 ?o27 ?r42 ?loc27 ?gr50)) (not (q3 ?o27 ?r42 ?loc27 ?gr50)) (turnDomain))
+	)
+	(:action trans-3
+		:parameters (?o27 - object ?r42 - location ?loc27 - location ?gr50 - gripper)
+		:precondition (and (or (and (q1 ?o27 ?r42 ?loc27 ?gr50) (at ?o27 ?r42) (not (atrob ?loc27))) (and (q1 ?o27 ?r42 ?loc27 ?gr50) (at ?o27 ?r42) (atrob ?loc27) (atrob ?r42) (carry ?o27 ?gr50)) (and (q2 ?o27 ?r42 ?loc27 ?gr50) (at ?o27 ?r42) (atrob ?r42) (carry ?o27 ?gr50)) (and (q3 ?o27 ?r42 ?loc27 ?gr50) (not (atrob ?loc27))) (and (q3 ?o27 ?r42 ?loc27 ?gr50) (atrob ?loc27) (atrob ?r42) (carry ?o27 ?gr50)) (and (q4 ?o27 ?r42 ?loc27 ?gr50) (atrob ?r42) (carry ?o27 ?gr50))) (not (turnDomain)))
+		:effect (and (q3 ?o27 ?r42 ?loc27 ?gr50) (not (q1 ?o27 ?r42 ?loc27 ?gr50)) (not (q4 ?o27 ?r42 ?loc27 ?gr50)) (not (q2 ?o27 ?r42 ?loc27 ?gr50)) (turnDomain))
 	)
 )

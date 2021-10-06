@@ -13,9 +13,9 @@
 		(q1 r1 g r2)
 		(room r1)
 		(room r2)
-		(turndomain)
-		(act)
-		(l_d2))
-	(:goal (and 
-		(end)))
+		(turndomain))
+	(:goal (oneof 
+		(d2 (and(q3 b1 g r1 r2)))
+		(d1 (and(q3 r1 g r2)))
+		))
 )
